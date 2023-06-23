@@ -1,7 +1,24 @@
 import React, { useEffect } from "react";
 import { Typography, Stack, Paper, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  //
+  // please include useEffect block to check if user is logged in, if yes, then redirect to the default "homepage" for logged in users
+
+  // useEffect(()=>{
+  // logic to check if user is signed in to go here.
+  // }, [])
+
+  const signUpButton = () => {
+    navigate("/signup");
+  };
+
+  const loginButton = () => {
+    navigate("/login");
+  };
+
   return (
     <Stack alignItems={"center"} justifyContent={"center"} my={1}>
       <Paper sx={{ px: 5, py: 4, my: 7 }} elevation={0}>
@@ -20,7 +37,9 @@ const LoginPage = () => {
       </Typography>
       <br />
       <br />
-      <Button variant="contained">Log In</Button>
+      <Button variant="contained" onClick={loginButton}>
+        Log In
+      </Button>
       <br />
       <br />
       <Typography
@@ -31,7 +50,9 @@ const LoginPage = () => {
       </Typography>
       <br />
       <br />
-      <Button variant="contained">Sign Up</Button>
+      <Button variant="contained" onClick={signUpButton}>
+        Sign Up
+      </Button>
       <br />
       <br />
       <br />
