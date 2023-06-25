@@ -1,0 +1,12 @@
+.band-card {
+  height: 20em;
+}
+
+.band-image {
+  height: 50%;
+}
+
+.band-grid {
+  margin-left: 2em !important;
+  margin-right: 2em !important;
+}
