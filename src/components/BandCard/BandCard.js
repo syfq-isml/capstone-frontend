@@ -1,4 +1,3 @@
-import React from "react";
 import { Typography, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +9,7 @@ import "./BandCard.css";
 
 const BandCard = () => {
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={6} lg={4}>
       <Card className="band-card">
         <CardMedia
           className="band-image"
