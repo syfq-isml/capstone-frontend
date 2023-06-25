@@ -19,39 +19,12 @@ const BandListingPage = () => {
       mr={4}
       pb={4}
     >
-      <Typography variant="h3">Our Musicians</Typography>
-      <Grid container spacing={2} my={2}>
+      <Typography variant="h3" my={3}>
+        Our Musicians
+      </Typography>
+      <Grid container spacing={2} my={1}>
         <BandCard />
-        <Grid item xs={12} md={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://static.thehoneycombers.com/wp-content/uploads/sites/2/2016/11/Vetta-Quartet-wedding-bands-in-singapore-900x643.png"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Vetta Quartet
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                An ensemble structure of 2 violins, 1 viola and 1 cello –
-                creating a full sound with rich harmonies. Elegantly reflects
-                the quality of your organisation and event.
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Chip label="String Quartet" className="band-category" />
-              <Chip label="Classical" className="band-category" />
-            </Box>
-            <Box textAlign="center" my={2}>
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Card className="band-card">
             <CardMedia
               className="band-image"
@@ -64,42 +37,51 @@ const BandListingPage = () => {
                 Astronauts
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                This four-piece electronic-pop band's dancey originals are a fab
-                mash of retro-inspired beats and infectious synth licks.
+                Inspired by the likes of Jamiroquai, Bruno Mars and D’Angelo,
+                this R&B and funk band is most known for its pumped-up live
+                performances.
               </Typography>
             </CardContent>
             <Box textAlign="center">
+              <Chip label="RnB" className="band-category" />
+              <Chip label="Funk" className="band-category" />
+            </Box>
+            <Box textAlign="center" my={2}>
               <Button justifyContent={"center"} size="small">
                 Learn More
               </Button>
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Card className="band-card">
             <CardMedia
               className="band-image"
               component="img"
-              image="https://cdn-star2-com.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2015/06/queen.jpg"
+              image="https://expatliving.sg/wp-content/uploads/2018/04/singapore-music-disco-hue.jpg"
               title="green iguana"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Queen
+                Disco Hue
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
+                This four-piece electronic-pop band s dancey originals are a fab
+                mash of retro-inspired beats and infectious synth licks.
               </Typography>
             </CardContent>
             <Box textAlign="center">
+              <Chip label="RnB" className="band-category" />
+              <Chip label="Funk" className="band-category" />
+            </Box>
+            <Box textAlign="center" my={2}>
               <Button justifyContent={"center"} size="small">
                 Learn More
               </Button>
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Card className="band-card">
             <CardMedia
               className="band-image"
@@ -123,7 +105,7 @@ const BandListingPage = () => {
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Card className="band-card">
             <CardMedia
               className="band-image"
@@ -147,7 +129,7 @@ const BandListingPage = () => {
             </Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Card className="band-card">
             <CardMedia
               className="band-image"
