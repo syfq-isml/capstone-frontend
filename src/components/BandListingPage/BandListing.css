@@ -1,12 +1,18 @@
 .band-card {
-  height: 20em;
+  height: 25em;
 }
 
 .band-image {
   height: 50%;
 }
 
-.band-grid {
-  margin-left: 2em !important;
-  margin-right: 2em !important;
+.band-category {
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+}
+
+@media only screen and (max-width: 600px) {
+  .band-card {
+    height: 100%;
+  }
 }
