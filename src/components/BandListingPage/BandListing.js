@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { Typography, Stack, Paper, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Typography, Stack, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import "./BandListing.css";
+import BandCard from "../BandCard/BandCard";
 
 const BandListingPage = () => {
   return (
@@ -21,6 +21,7 @@ const BandListingPage = () => {
     >
       <Typography variant="h3">Our Musicians</Typography>
       <Grid container spacing={2} my={2}>
+        <BandCard />
         <Grid item xs={12} md={4}>
           <Card className="band-card">
             <CardMedia
