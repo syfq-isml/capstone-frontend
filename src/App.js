@@ -6,6 +6,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import SignUpPage from "./components/SignUpPage/SignUpPage";
+
+import BandListingPage from "./components/BandListingPage/BandListing";
+import Navbar from "./components/Navbar/Navbar";
 import MakeNewBookingPage from "./components/MakeNewBookingPage/MakeNewBookingPage";
 
 class App extends React.Component {
@@ -13,6 +16,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <BrowserRouter>
+          <Navbar />
           <Routes>
             {/* <Route path ="/" element={<NavBar />}> */}
 
@@ -20,6 +24,8 @@ class App extends React.Component {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/makenewbooking" element={<MakeNewBookingPage />} />
+            <Route path="/bands" element={<BandListingPage />} />
+
             {/* </Route> */}
           </Routes>
         </BrowserRouter>
