@@ -1,11 +1,6 @@
 import React from "react";
 import { Typography, Stack, Button } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import "./BandListing.css";
 import BandCard from "../BandCard/BandCard";
 
@@ -21,7 +16,7 @@ const BandListingPage = () => {
 
       createdAt: "2023-06-24T14:58:57.290Z",
       updatedAt: "2023-06-24T14:58:57.290Z",
-      Genres: [
+      genres: [
         {
           id: 1,
           name: "Pop",
@@ -70,7 +65,7 @@ const BandListingPage = () => {
         "https://i.discogs.com/rzyFTbxdgFH8gl734ibwwqlKZagRPQ5iu_XCQfMwbIU/rs:fit/g:sm/q:90/h:821/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIyNjgw/MjMtMTYxMTAyODc5/My00MDQ5LmpwZWc.jpeg",
       createdAt: "2023-06-24T14:58:57.290Z",
       updatedAt: "2023-06-24T14:58:57.290Z",
-      Genres: [
+      genres: [
         {
           id: 1,
           name: "Pop",
@@ -107,7 +102,7 @@ const BandListingPage = () => {
         "https://upload.wikimedia.org/wikipedia/commons/6/65/Ella_Fitzgerald_1962.JPG",
       createdAt: "2023-06-24T14:58:57.290Z",
       updatedAt: "2023-06-24T14:58:57.290Z",
-      Genres: [
+      genres: [
         {
           id: 4,
           name: "Jazz",

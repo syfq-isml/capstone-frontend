@@ -19,7 +19,8 @@ const style = {
   p: 2,
 };
 
-const BandModal = () => {
+const BandModal = ({ props }) => {
+  const { name, description, photoUrl, genres } = props;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,28 +40,23 @@ const BandModal = () => {
               <CancelIcon />
             </IconButton>
           </Box>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            <b>Vetta Quartet</b>
+          <Typography id="modal-modal-title" variant="h3" my={1}>
+            {name}
           </Typography>
-          <Image
-            src="https://static.thehoneycombers.com/wp-content/uploads/sites/2/2016/11/Vetta-Quartet-wedding-bands-in-singapore-900x643.png"
-            height={"10em"}
-          />
+          <Image src={photoUrl} height={"15em"} />
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Vetta Quartet is an established ensemble structure of 2 violins, 1
-            viola and 1 cello – creating a full sound with rich harmonies.
-            Coupled with its visual aesthetics, the String Quartet elegantly
-            reflects the quality of your organisation and event.
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            The String Quartet is VETTA’s flagship service, and is a
-            well-recognised and sought-after live music band for Singapore
-            weddings and corporate events, with consistent bookings months in
-            advance.
+            {description}
           </Typography>
           <Box textAlign="center" my={2}>
-            <Chip label="String Quartet" className="band-category" />
-            <Chip label="Classical" className="band-category" />
+            {genres.map((genre) => {
+              return (
+                <Chip
+                  label={genre.name}
+                  key={genre.id + genre.band_genres.BandId}
+                  className="band-category"
+                />
+              );
+            })}
           </Box>
         </Box>
       </Modal>

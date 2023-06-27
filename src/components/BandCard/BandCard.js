@@ -9,7 +9,7 @@ import BandModal from "./BandModal/BandModal";
 import "./BandCard.css";
 
 const BandCard = ({ props }) => {
-  const { name, description, photoUrl, Genres } = props;
+  const { name, description, photoUrl, genres } = props;
   return (
     <Grid item xs={12} md={6} lg={4}>
       <Card className="band-card">
@@ -23,7 +23,7 @@ const BandCard = ({ props }) => {
           </Typography>
         </CardContent>
         <Box textAlign="center">
-          {Genres.map((genre) => {
+          {genres.map((genre) => {
             return (
               <Chip
                 label={genre.name}
@@ -34,7 +34,7 @@ const BandCard = ({ props }) => {
           })}
         </Box>
         <Box textAlign="center" my={1}>
-          <BandModal />
+          <BandModal props={props} />
         </Box>
       </Card>
     </Grid>
