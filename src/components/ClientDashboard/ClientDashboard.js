@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Stack, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -8,12 +8,14 @@ import BookingCard from "./BookingCard/BookingCard";
 import "./ClientDashboard.css";
 
 const ClientDashboard = () => {
+  const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
   console.log(accessToken);
 
   // useEffect block to check if user is logged in or not:
+  /*
   useEffect(() => {
     const checkIfAccessTokenIsValid = async () => {
       try {
@@ -42,7 +44,23 @@ const ClientDashboard = () => {
     if (accessToken) {
       checkIfAccessTokenIsValid();
     } else navigate("/homepage");
-  }, [accessToken, navigate]);
+  }, [accessToken, navigate]);*/
+
+  useEffect(() => {
+    const getBookings = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/bookings/user/2`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setBookings(res.data);
+        });
+    };
+    getBookings();
+  }, [accessToken]);
 
   let myBookings = [
     {
@@ -256,7 +274,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
         Bookings Dashboard
       </Typography>
       <Typography my={1}>
-        {!myBookings.length && (
+        {!bookings.length && (
           <div>
             <div className="client-dashboard-emoji">😪</div>
             <div>You currently have no bookings.</div>
@@ -264,8 +282,8 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
         )}
       </Typography>
       <Box mb={3}>
-        {myBookings.map((booking) => {
-          return <BookingCard key={booking.event_name} props={booking} />;
+        {bookings.map((booking) => {
+          return <BookingCard key={booking.eventName} props={booking} />;
         })}
       </Box>
       <Button variant="contained">+ Create New Booking</Button>

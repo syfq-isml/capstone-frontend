@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import "./BookingCard.css";
 
 const BookingCard = ({ props }) => {
-  const { event_name, start_date_time, end_date_time, venue, status } = props;
+  const { eventName, startDateTime, endDateTime, venue, status } = props;
   const [bookingStatusClass, setBookingStatusClass] = useState("pending");
   const [statusIcon, setStatusIcon] = useState("⌛");
 
@@ -36,15 +36,15 @@ const BookingCard = ({ props }) => {
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {statusIcon}
-          {event_name}
+          {eventName}
         </Typography>
         <Typography>
           <b>Start: </b>
-          {start_date_time.toString()}
+          {startDateTime.toString()}
         </Typography>
         <Typography>
           <b>End: </b>
-          {end_date_time.toString()}
+          {endDateTime.toString()}
         </Typography>
         <Typography>
           <b>Venue: </b>
