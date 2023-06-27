@@ -10,6 +10,131 @@ import "./BandListing.css";
 import BandCard from "../BandCard/BandCard";
 
 const BandListingPage = () => {
+  const bands = [
+    {
+      id: 1,
+      name: "Amplified",
+      gigRate: 1000,
+      description:
+        'Amplified is a rock band consisting of three young boys from Hong Kong. \n  While from Hong Kong, they are primarily known in Japan. \n  They were discovered through Sony Music Japan\'s International Audition, and signed to the Sony subsidiary DefSTAR Records. \n  Their debut single, "Mr. Raindrop", was used as the second ending theme for the anime Gintama. \n  Their debut album, Turn It Up!, was released on 2 August',
+      photoUrl: "https://i1.jpopasia.com/assets/1/24402-amplified-3ooa.jpg",
+
+      createdAt: "2023-06-24T14:58:57.290Z",
+      updatedAt: "2023-06-24T14:58:57.290Z",
+      Genres: [
+        {
+          id: 1,
+          name: "Pop",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 1,
+            GenreId: 1,
+          },
+        },
+        {
+          id: 2,
+          name: "Rock",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 1,
+            GenreId: 2,
+          },
+        },
+        {
+          id: 3,
+          name: "Punk",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 1,
+            GenreId: 3,
+          },
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Beyond",
+      gigRate: 3000,
+      description:
+        "Beyond was a Hong Kong rock band formed in 1983. \n    The band became prominent in Hong Kong, Taiwan, Japan, Singapore, Malaysia, Mainland China, and Overseas Chinese communities. \n    The band is widely considered as the most successful and influential Cantopop band from Hong Kong.",
+      photoUrl:
+        "https://i.discogs.com/rzyFTbxdgFH8gl734ibwwqlKZagRPQ5iu_XCQfMwbIU/rs:fit/g:sm/q:90/h:821/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIyNjgw/MjMtMTYxMTAyODc5/My00MDQ5LmpwZWc.jpeg",
+      createdAt: "2023-06-24T14:58:57.290Z",
+      updatedAt: "2023-06-24T14:58:57.290Z",
+      Genres: [
+        {
+          id: 1,
+          name: "Pop",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 2,
+            GenreId: 1,
+          },
+        },
+        {
+          id: 2,
+          name: "Rock",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 2,
+            GenreId: 2,
+          },
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Ella Fitzgerald",
+      gigRate: 5000,
+      description:
+        'Ella Jane Fitzgerald was an American jazz singer, sometimes referred to as the "First Lady of Song", "Queen of Jazz", and "Lady Ella". \n    She was noted for her purity of tone, impeccable diction, phrasing, timing, intonation, and a "horn-like" improvisational ability, particularly in her scat singing.',
+      photoUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/6/65/Ella_Fitzgerald_1962.JPG",
+      createdAt: "2023-06-24T14:58:57.290Z",
+      updatedAt: "2023-06-24T14:58:57.290Z",
+      Genres: [
+        {
+          id: 4,
+          name: "Jazz",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 3,
+            GenreId: 4,
+          },
+        },
+        {
+          id: 6,
+          name: "Blues",
+          createdAt: "2023-06-24T14:58:57.294Z",
+          updatedAt: "2023-06-24T14:58:57.294Z",
+          band_genres: {
+            createdAt: "2023-06-24T14:58:57.296Z",
+            updatedAt: "2023-06-24T14:58:57.296Z",
+            BandId: 3,
+            GenreId: 6,
+          },
+        },
+      ],
+    },
+  ];
   return (
     <Stack
       alignItems={"center"}
@@ -23,136 +148,9 @@ const BandListingPage = () => {
         Our Musicians
       </Typography>
       <Grid container spacing={2} my={1}>
-        <BandCard />
-        <Grid item xs={12} md={6} lg={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://expatliving.sg/wp-content/uploads/2019/04/astronauts-band-local-music-singapore-live-music.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Astronauts
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Inspired by the likes of Jamiroquai, Bruno Mars and D’Angelo,
-                this R&B and funk band is most known for its pumped-up live
-                performances.
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Chip label="RnB" className="band-category" />
-              <Chip label="Funk" className="band-category" />
-            </Box>
-            <Box textAlign="center" my={2}>
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://expatliving.sg/wp-content/uploads/2018/04/singapore-music-disco-hue.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Disco Hue
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                This four-piece electronic-pop band s dancey originals are a fab
-                mash of retro-inspired beats and infectious synth licks.
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Chip label="RnB" className="band-category" />
-              <Chip label="Funk" className="band-category" />
-            </Box>
-            <Box textAlign="center" my={2}>
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/10/16/41e9b47c-07af-11eb-afc8-92e0da0ef1c3_image_hires_155550.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Black Pink
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://static.wixstatic.com/media/d16e40_71d406893d254b0b95485a7520e4f1e8~mv2.jpg/v1/fill/w_600,h_600,al_c,lg_1,q_80/d16e40_71d406893d254b0b95485a7520e4f1e8~mv2.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Beyond
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card className="band-card">
-            <CardMedia
-              className="band-image"
-              component="img"
-              image="https://cdn-star2-com.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2015/06/queen.jpg"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Queen
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <Box textAlign="center">
-              <Button justifyContent={"center"} size="small">
-                Learn More
-              </Button>
-            </Box>
-          </Card>
-        </Grid>
+        <BandCard props={bands[0]} />
+        <BandCard props={bands[1]} />
+        <BandCard props={bands[2]} />
       </Grid>
     </Stack>
   );
