@@ -313,7 +313,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
     },
     {
       id: 7,
-      name: "R&B",
+      name: "RnB",
       createdAt: "2023-06-24T14:15:21.139Z",
       updatedAt: "2023-06-24T14:15:21.139Z",
     },
