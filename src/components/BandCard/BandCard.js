@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import BandModal from "./BandModal/BandModal";
 import "./BandCard.css";
 
 const BandCard = () => {
@@ -31,9 +32,9 @@ const BandCard = () => {
           <Chip label="String Quartet" className="band-category" />
           <Chip label="Classical" className="band-category" />
         </Box>
-        <Box textAlign="center" my={2}>
+        <Box textAlign="center" my={1}>
           <Button justifyContent={"center"} size="small">
-            Learn More
+            <BandModal />
           </Button>
         </Box>
       </Card>
