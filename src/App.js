@@ -18,15 +18,11 @@ class App extends React.Component {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            {/* <Route path ="/" element={<NavBar />}> */}
-
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/makenewbooking" element={<MakeNewBookingPage />} />
             <Route path="/bands" element={<BandListingPage />} />
-
-            {/* </Route> */}
           </Routes>
         </BrowserRouter>
       </div>

@@ -73,7 +73,6 @@ const MakeNewBookingPage = () => {
             size="small"
             id="dateInput"
             type="date"
-            label="Date"
             onChange={handleChange}
           ></TextField>
           <TextField
@@ -83,7 +82,6 @@ const MakeNewBookingPage = () => {
             size="small"
             id="timeInput"
             type="time"
-            label="Time"
             onChange={handleChange}
           ></TextField>
           <TextField
