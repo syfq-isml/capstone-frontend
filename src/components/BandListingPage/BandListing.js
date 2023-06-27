@@ -130,6 +130,7 @@ const BandListingPage = () => {
       ],
     },
   ];
+
   return (
     <Stack
       alignItems={"center"}
@@ -143,9 +144,10 @@ const BandListingPage = () => {
         Our Musicians
       </Typography>
       <Grid container spacing={2} my={1}>
-        <BandCard props={bands[0]} />
-        <BandCard props={bands[1]} />
-        <BandCard props={bands[2]} />
+        {bands.map((band) => {
+          console.log(band);
+          return <BandCard props={band} />;
+        })}
       </Grid>
     </Stack>
   );
