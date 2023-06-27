@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -19,11 +18,8 @@ const style = {
   p: 2,
 };
 
-const BandModal = ({ props }) => {
+const BandModal = ({ props, handleOpen, handleClose, open }) => {
   const { name, description, photoUrl, genres, gigRate } = props;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <div>

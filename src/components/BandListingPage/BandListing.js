@@ -236,7 +236,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       id: 7, // int
       name: "Joie Tan", // str
       gigRate: 1000, // int
-      description: `Joie Tan’s musical career began in 2008 on YouTube, where she’s built an incredible fan base amassing over 329,000 views of her most popular cover of Frank Sinatra’s Fly Me To The Moon. Since then, she has reached an impressive 1,120,000 channel views. Now, she’s just released her first, self-funded album.`, // str
+      description: `Joie Tan’s musical career began in 2008 on YouTube, amassing over 329,000 views on her Fly Me To The Moon cover. Since then, she has reached an impressive 1,120,000 channel views. Now, she’s just released her first, self-funded album.`, // str
       photoUrl:
         "https://expatliving.sg/wp-content/uploads/2018/04/joie-tan-singapore-singer-music.jpg", // str
       genres: [
@@ -282,8 +282,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       </Typography>
       <Grid container spacing={2} my={1}>
         {bands.map((band) => {
-          console.log(band);
-          return <BandCard props={band} />;
+          return <BandCard key={band.name} props={band} />;
         })}
       </Grid>
     </Stack>
