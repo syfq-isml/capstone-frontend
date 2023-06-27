@@ -20,6 +20,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const accessToken = localStorage.getItem("accessToken");
+  console.log(accessToken);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -34,6 +36,11 @@ const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const onClickLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/homepage");
   };
 
   const handleNavigation = (page) => {
@@ -167,7 +174,15 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    if (setting === "Logout") {
+                      onClickLogout(); // Call onClickLogout function for "Logout" setting
+                    }
+                    handleCloseUserMenu();
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
