@@ -49,7 +49,7 @@ const ClientViewBooking = () => {
           .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
           .map((band) => {
             return (
-              <Box>
+              <Box key={band.name}>
                 <Typography>
                   {band.bandBooking.rank}.{band.name} :{" "}
                   {band.bandBooking.status}
