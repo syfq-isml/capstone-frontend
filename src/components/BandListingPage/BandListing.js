@@ -62,7 +62,7 @@ const BandListingPage = () => {
       description:
         "Beyond was a Hong Kong rock band formed in 1983. \n    The band became prominent in Hong Kong, Taiwan, Japan, Singapore, Malaysia, Mainland China, and Overseas Chinese communities. \n    The band is widely considered as the most successful and influential Cantopop band from Hong Kong.",
       photoUrl:
-        "https://i.discogs.com/rzyFTbxdgFH8gl734ibwwqlKZagRPQ5iu_XCQfMwbIU/rs:fit/g:sm/q:90/h:821/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIyNjgw/MjMtMTYxMTAyODc5/My00MDQ5LmpwZWc.jpeg",
+        "https://onecms-res.cloudinary.com/image/upload/v1640967679/8days-migration/beyond-1-data.jpg",
       createdAt: "2023-06-24T14:58:57.290Z",
       updatedAt: "2023-06-24T14:58:57.290Z",
       genres: [
