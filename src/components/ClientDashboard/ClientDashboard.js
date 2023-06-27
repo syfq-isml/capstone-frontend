@@ -12,6 +12,7 @@ const ClientDashboard = () => {
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
   console.log(accessToken);
 
   // useEffect block to check if user is logged in or not:
@@ -49,7 +50,7 @@ const ClientDashboard = () => {
   useEffect(() => {
     const getBookings = async () => {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/bookings/user/2`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/bookings/user/${userId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
