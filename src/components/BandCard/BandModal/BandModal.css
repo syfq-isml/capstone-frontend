@@ -1,0 +1,9 @@
+.band-modal {
+  width: 40vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .band-modal {
+    width: 80vw;
+  }
+}
