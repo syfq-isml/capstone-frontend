@@ -48,7 +48,7 @@ const BandModal = ({ props, handleOpen, handleClose, open }) => {
               return (
                 <Chip
                   label={genre.name}
-                  key={genre.id + genre.band_genres.BandId}
+                  key={genre.id + genre.bandGenre.bandId}
                   className="band-category"
                 />
               );
