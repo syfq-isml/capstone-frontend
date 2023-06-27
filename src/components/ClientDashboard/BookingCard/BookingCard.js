@@ -9,9 +9,12 @@ import Chip from "@mui/material/Chip";
 
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import "./BookingCard.css";
 
 const BookingCard = ({ props }) => {
+  const navigate = useNavigate();
   const { eventName, startDateTime, endDateTime, venue, status } = props;
   const [bookingStatusClass, setBookingStatusClass] = useState("pending");
   const [statusIcon, setStatusIcon] = useState("⌛");
@@ -30,6 +33,10 @@ const BookingCard = ({ props }) => {
     setBookingStatusClass(statusRef[status]);
     setStatusIcon(iconRef[status]);
   }, [status]);
+
+  const handleView = () => {
+    navigate("/booking-request", { state: props });
+  };
 
   return (
     <Card className={`booking-card ${bookingStatusClass}`} sx={{ mb: 2 }}>
@@ -54,7 +61,7 @@ const BookingCard = ({ props }) => {
           <b>Status: </b>
           {status}
         </Typography>
-        <Button>View More</Button>
+        <Button onClick={handleView}>View More</Button>
         {status === "Awaiting Payment" ? <Button>Pay here</Button> : null}
       </CardContent>
     </Card>
