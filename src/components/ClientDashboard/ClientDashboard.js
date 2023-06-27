@@ -273,14 +273,14 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       <Typography variant="h4" my={1} sx={{ textAlign: "center" }}>
         Bookings Dashboard
       </Typography>
-      <Typography my={1}>
+      <Box my={1}>
         {!bookings.length && (
-          <div>
-            <div className="client-dashboard-emoji">😪</div>
-            <div>You currently have no bookings.</div>
-          </div>
+          <Box>
+            <Typography className="client-dashboard-emoji">😪</Typography>
+            <Typography>You currently have no bookings.</Typography>
+          </Box>
         )}
-      </Typography>
+      </Box>
       <Box mb={3}>
         {bookings.map((booking) => {
           return <BookingCard key={booking.eventName} props={booking} />;

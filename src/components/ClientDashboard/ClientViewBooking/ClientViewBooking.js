@@ -21,7 +21,9 @@ const ClientViewBooking = () => {
     eventName,
     bands,
     isContactMe,
+    status,
   } = state;
+  console.log(state);
 
   const navigate = useNavigate();
 
@@ -36,21 +38,25 @@ const ClientViewBooking = () => {
           {eventName}
         </Typography>
       </Box>
+      <Typography>Status: {status}</Typography>
       <Typography>Booking Id: {id}</Typography>
       <Typography>Start: {startDateTime}</Typography>
       <Typography>End: {endDateTime}</Typography>
       <Typography>Venue: {venue}</Typography>
       <Box>
         <Typography variant="h5">Bands:</Typography>
-        {bands.map((band) => {
-          return (
-            <Box>
-              <Typography>
-                {band.bandBooking.rank}.{band.name}
-              </Typography>
-            </Box>
-          );
-        })}
+        {bands
+          .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
+          .map((band) => {
+            return (
+              <Box>
+                <Typography>
+                  {band.bandBooking.rank}.{band.name} :{" "}
+                  {band.bandBooking.status}
+                </Typography>
+              </Box>
+            );
+          })}
       </Box>
       <Typography>
         Contact me if unable to get my chosen musicians:{" "}
