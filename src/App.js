@@ -10,6 +10,7 @@ import SignUpPage from "./components/SignUpPage/SignUpPage";
 import BandListingPage from "./components/BandListingPage/BandListing";
 import Navbar from "./components/Navbar/Navbar";
 import MakeNewBookingPage from "./components/MakeNewBookingPage/MakeNewBookingPage";
+import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
 
 class App extends React.Component {
   render() {
