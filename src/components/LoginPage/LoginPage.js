@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
@@ -13,31 +13,35 @@ const LoginPage = () => {
   //    insert logic to check login status, if user is logged in then navigate straight to default home page for logged in users .
   //   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Show loading toast message
+    toast.info("Logging in...", { autoClose: false });
 
-    //   toast
-    //     .promise(
-    //       signInWithEmailAndPassword(auth, state.emailInput, state.passwordInput),
-    //       {
-    //         pending: "Logging in...",
-    //         success: "Successfully logged in!",
-    //         error: "Oops, check your email and password.",
-    //       }
-    //     )
-    //     .then((userCredential) => {
-    //       console.log("somebody has signed in");
-    //     })
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
+        {
+          email: state.emailInput,
+          password: state.passwordInput,
+        }
+      );
 
-    //     .then(() => {
-    //       setState({ emailInput: "", passwordInput: "" });
-    //     })
-    //     .then(() => {
-    //       navigate("/");
-    //     })
-    //     .catch((error) => {
-    //       console.log("theres is an error signing in");
-    //     });
+      console.log(response.data.token);
+      localStorage.setItem("accessToken", response.data.token);
+      toast.success("Successfully logged in!");
+
+      setState({
+        emailInput: "",
+        passwordInput: "",
+      });
+
+      navigate("/bands");
+    } catch (error) {
+      console.log(error);
+      // Show error toast message
+      toast.error("Error logging in. Please try again.");
+    }
   };
 
   const handleChange = (e) => {

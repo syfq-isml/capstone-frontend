@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Stack, TextField, Typography } from "@mui/material";
@@ -21,29 +21,38 @@ const SignUpPage = () => {
   //     logic to check if user is already logged in, if yes then redirect to default home page for logged in users
   //   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // Show loading toast message
+    toast.info("Signing you up...", { autoClose: false });
 
-    // toast
-    //   .promise(
-    //     createUserWithEmailAndPassword(
-    //       auth,
-    //       state.emailInput,
-    //       state.passwordInput
-    //     ),
-    //     {
-    //       pending: "Creating an account...",
-    //       success: "Successfully created an account!",
-    //       error: "Oops, something went wrong. Try again!",
-    //     }
-    //   )
-    //   .then(() => {
-    //     toast.success("🐝 Successfully created a new account!");
-    //     setState({ emailInput: "", passwordInput: "" });
-    //   })
-    //   .then(() => {
-    //     navigate("/bookings");
-    //   });
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
+        {
+          name: state.nameInput,
+          email: state.emailInput,
+          password: state.passwordInput,
+          phoneNumber: state.phoneNumberInput,
+        }
+      );
+
+      console.log(response.data.token);
+      localStorage.setItem("accessToken", response.data.token);
+      toast.success("Successfully created a new account!");
+      setState({
+        nameInput: "",
+        emailInput: "",
+        passwordInput: "",
+        phoneNumberInput: "",
+      });
+
+      navigate("/bands");
+    } catch (error) {
+      console.log(error);
+      // Show error toast message
+      toast.error("Error signing up. Please try again.");
+    }
   };
 
   const handleChange = (e) => {
