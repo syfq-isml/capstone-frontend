@@ -8,6 +8,7 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import SignUpPage from "./components/SignUpPage/SignUpPage";
 import BandListingPage from "./components/BandListingPage/BandListing";
 import Navbar from "./components/Navbar/Navbar";
+import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
 
 class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class App extends React.Component {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/bands" element={<BandListingPage />} />
+            <Route path="/dashboard" element={<ClientDashboard />} />
             {/* </Route> */}
           </Routes>
         </BrowserRouter>
