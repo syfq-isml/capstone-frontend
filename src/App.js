@@ -23,7 +23,7 @@ class App extends React.Component {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/bands" element={<BandListingPage />} />
-            <Route path="/dashboard" element={<ClientDashboard />} />
+            <Route path="/bookings" element={<ClientDashboard />} />
             {/* </Route> */}
           </Routes>
         </BrowserRouter>
