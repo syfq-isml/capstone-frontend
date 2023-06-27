@@ -19,7 +19,8 @@ class App extends React.Component {
         <BrowserRouter>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<ClientDashboard />} />
+            <Route path="/homepage" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/makenewbooking" element={<MakeNewBookingPage />} />
