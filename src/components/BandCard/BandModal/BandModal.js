@@ -20,7 +20,7 @@ const style = {
 };
 
 const BandModal = ({ props }) => {
-  const { name, description, photoUrl, genres } = props;
+  const { name, description, photoUrl, genres, gigRate } = props;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -57,6 +57,7 @@ const BandModal = ({ props }) => {
                 />
               );
             })}
+            <Typography sx={{ mt: 2 }}>Approx. ${gigRate} per event</Typography>
           </Box>
         </Box>
       </Modal>

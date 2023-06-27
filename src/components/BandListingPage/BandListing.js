@@ -11,7 +11,7 @@ const BandListingPage = () => {
       name: "Amplified",
       gigRate: 1000,
       description:
-        'Amplified is a rock band consisting of three young boys from Hong Kong. \n  While from Hong Kong, they are primarily known in Japan. \n  They were discovered through Sony Music Japan\'s International Audition, and signed to the Sony subsidiary DefSTAR Records. \n  Their debut single, "Mr. Raindrop", was used as the second ending theme for the anime Gintama. \n  Their debut album, Turn It Up!, was released on 2 August',
+        'Amplified is a rock band consisting of three young boys from Hong Kong. \n  While from Hong Kong, they are primarily known in Japan. \n  They were discovered through Sony Music Japan\'s International Audition, and signed to the Sony subsidiary DefSTAR Records. \n  Their debut single, "Mr. Raindrop", was used as the second ending theme for the anime Gintama. \n  Their debut album, Turn It Up!, was released on 2 August.',
       photoUrl: "https://i1.jpopasia.com/assets/1/24402-amplified-3ooa.jpg",
 
       createdAt: "2023-06-24T14:58:57.290Z",
