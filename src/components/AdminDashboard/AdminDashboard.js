@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Stack, Paper, Button, Box } from "@mui/material";
+import { Typography, Stack, Paper, Button, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -37,9 +37,15 @@ const AdminDashboard = () => {
         )}
       </Box>
       <Box mb={3}>
-        {bookings.map((booking) => {
-          return <AdminBookingCard key={booking.eventName} props={booking} />;
-        })}
+        <Grid container>
+          {bookings.map((booking) => {
+            return (
+              <Grid item xs={12} sm={6} md={4}>
+                <AdminBookingCard key={booking.eventName} props={booking} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Box>
     </Stack>
   );
