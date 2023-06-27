@@ -15,7 +15,6 @@ const ClientDashboard = () => {
   console.log(accessToken);
 
   // useEffect block to check if user is logged in or not:
-  /*
   useEffect(() => {
     const checkIfAccessTokenIsValid = async () => {
       try {
@@ -39,12 +38,13 @@ const ClientDashboard = () => {
           "Error occurred while checking if user was logged in",
           error
         );
+        navigate("/homepage");
       }
     };
     if (accessToken) {
       checkIfAccessTokenIsValid();
     } else navigate("/homepage");
-  }, [accessToken, navigate]);*/
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     const getBookings = async () => {
