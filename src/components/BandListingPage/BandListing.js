@@ -1,8 +1,14 @@
 import React from "react";
-import { Typography, Stack, Button } from "@mui/material";
+import { useState } from "react";
+
+import { Typography, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import "./BandListing.css";
 import BandCard from "../BandCard/BandCard";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const BandListingPage = () => {
   const bands = [
@@ -267,6 +273,60 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       ], // arr of strs
     }, // arr of strs
   ];
+  const [selectedGenre, setSelectedGenre] = useState("All");
+  const [genres, setGenres] = useState([
+    {
+      id: 1,
+      name: "Pop",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 2,
+      name: "Rock",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 3,
+      name: "Punk",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 4,
+      name: "Jazz",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 5,
+      name: "Hip Hop",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 6,
+      name: "Blues",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 7,
+      name: "R&B",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+    {
+      id: 8,
+      name: "Classical",
+      createdAt: "2023-06-24T14:15:21.139Z",
+      updatedAt: "2023-06-24T14:15:21.139Z",
+    },
+  ]);
+  const handleChange = (event) => {
+    setSelectedGenre(event.target.value);
+  };
 
   return (
     <Stack
@@ -280,9 +340,32 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       <Typography variant="h3" my={3}>
         Our Musicians
       </Typography>
+      <FormControl>
+        <InputLabel id="select-helper-label">Genre</InputLabel>
+        <Select
+          labelId="select-helper-label"
+          id="simple-select-helper"
+          value={selectedGenre}
+          label="selectedGenre"
+          onChange={handleChange}
+        >
+          <MenuItem value="All">All</MenuItem>
+          {genres.map((genre) => {
+            return <MenuItem value={genre.name}>{genre.name}</MenuItem>;
+          })}
+        </Select>
+        <FormHelperText>Filter by Genre</FormHelperText>
+      </FormControl>
       <Grid container spacing={2} my={1}>
         {bands.map((band) => {
-          return <BandCard key={band.name} props={band} />;
+          if (selectedGenre === "All") {
+            return <BandCard key={band.name} props={band} />;
+          }
+          for (const genre of band.genres) {
+            if (genre.name === selectedGenre) {
+              return <BandCard key={band.name} props={band} />;
+            }
+          }
         })}
       </Grid>
     </Stack>
