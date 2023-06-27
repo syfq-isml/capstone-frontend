@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -19,9 +19,6 @@ const MakeNewBookingPage = () => {
   const navigateToHomePage = () => {
     navigate("/");
   };
-  useEffect(() => {
-    //   logic to check if user is already logged in, if yes then redirect to default home page for logged in users
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

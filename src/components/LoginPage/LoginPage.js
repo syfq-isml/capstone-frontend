@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
-import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [state, setState] = useState({ emailInput: "", passwordInput: "" });
   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //    insert logic to check login status, if user is logged in then navigate straight to default home page for logged in users .
-  //   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { toast } from "react-toastify";
 
 const SignUpPage = () => {
   const [state, setState] = useState({
