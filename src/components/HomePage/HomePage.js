@@ -22,8 +22,6 @@ const LoginPage = () => {
   return (
     <Stack alignItems={"center"} justifyContent={"center"} my={1}>
       <Paper sx={{ px: 5, py: 4, my: 7 }} elevation={0}>
-        {/* Link to "make new booking" to be removed before production: (this is just for live view during development to track changes while coding:) */}
-        <Link to="/makenewbooking">Make New Booking</Link>
         <Typography
           variant="h1"
           sx={{ fontFamily: "Arial", textAlign: "center" }}

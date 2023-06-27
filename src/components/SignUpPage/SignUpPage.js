@@ -23,8 +23,6 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Show loading toast message
-    toast.info("Signing you up...", { autoClose: false });
 
     try {
       const response = await axios.post(
@@ -39,7 +37,7 @@ const SignUpPage = () => {
 
       console.log(response.data.token);
       localStorage.setItem("accessToken", response.data.token);
-      toast.success("Successfully created a new account!");
+
       setState({
         nameInput: "",
         emailInput: "",
@@ -50,8 +48,6 @@ const SignUpPage = () => {
       navigate("/bands");
     } catch (error) {
       console.log(error);
-      // Show error toast message
-      toast.error("Error signing up. Please try again.");
     }
   };
 

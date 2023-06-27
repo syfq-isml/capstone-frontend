@@ -15,8 +15,6 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Show loading toast message
-    toast.info("Logging in...", { autoClose: false });
 
     try {
       const response = await axios.post(
@@ -29,7 +27,6 @@ const LoginPage = () => {
 
       console.log(response.data.token);
       localStorage.setItem("accessToken", response.data.token);
-      toast.success("Successfully logged in!");
 
       setState({
         emailInput: "",
@@ -39,8 +36,6 @@ const LoginPage = () => {
       navigate("/bands");
     } catch (error) {
       console.log(error);
-      // Show error toast message
-      toast.error("Error logging in. Please try again.");
     }
   };
 

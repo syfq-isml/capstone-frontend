@@ -13,13 +13,15 @@ const MakeNewBookingPage = () => {
     eventNameInput: "",
   });
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken");
+  console.log(accessToken);
 
   const navigateToHomePage = () => {
     navigate("/");
   };
-  //   useEffect(() => {
-  //     logic to check if user is already logged in, if yes then redirect to default home page for logged in users
-  //   }, []);
+  useEffect(() => {
+    //   logic to check if user is already logged in, if yes then redirect to default home page for logged in users
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

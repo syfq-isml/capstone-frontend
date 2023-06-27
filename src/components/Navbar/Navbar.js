@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["Bands", "Sign Up", "Login"];
+const pages = ["Bands", "Sign Up", "Login", "New Booking"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -41,6 +41,7 @@ const Navbar = () => {
       Bands: "bands",
       "Sign Up": "signup",
       Login: "login",
+      "New Booking": "makenewbooking",
     };
     return pageName[page];
   };
