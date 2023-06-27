@@ -32,37 +32,66 @@ const ClientViewBooking = () => {
   };
 
   return (
-    <Grid>
-      <Box>
-        <Typography my={2} variant="h4">
-          {eventName}
-        </Typography>
-      </Box>
-      <Typography>Status: {status}</Typography>
-      <Typography>Booking Id: {id}</Typography>
-      <Typography>Start: {startDateTime}</Typography>
-      <Typography>End: {endDateTime}</Typography>
-      <Typography>Venue: {venue}</Typography>
-      <Box>
-        <Typography variant="h5">Bands:</Typography>
-        {bands
-          .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
-          .map((band) => {
-            return (
-              <Box key={band.name}>
-                <Typography>
-                  {band.bandBooking.rank}.{band.name} :{" "}
-                  {band.bandBooking.status}
-                </Typography>
-              </Box>
-            );
-          })}
-      </Box>
-      <Typography>
-        Contact me if unable to get my chosen musicians:{" "}
-        {isContactMe.toString()}
-      </Typography>
-      <Button onClick={handleBack}>Back to Dashboard</Button>
+    <Grid container justifyContent="center" spacing={2}>
+      <Grid item xs={12}>
+        <Box>
+          <Typography my={2} variant="h4">
+            {eventName}
+          </Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h5">Event Details:</Typography>
+        <Box>
+          <Typography>
+            <b>Status: </b>
+            {status}
+          </Typography>
+          <Typography>
+            <b>Booking Id:</b> {id}
+          </Typography>
+          <Typography>
+            <b>Start: </b>
+            {startDateTime}
+          </Typography>
+          <Typography>
+            <b>End: </b>
+            {endDateTime}
+          </Typography>
+          <Typography>
+            <b>Venue: </b>
+            {venue}
+          </Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Box xs={12} sm={6}>
+          <Typography variant="h5">Bands:</Typography>
+          {bands
+            .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
+            .map((band) => {
+              return (
+                <Box key={band.name}>
+                  <Typography>
+                    {band.bandBooking.rank}. {band.name} :{" "}
+                    {band.bandBooking.status}
+                  </Typography>
+                </Box>
+              );
+            })}
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Box>
+          <Typography>
+            Contact me if all musicians are unavailable:{" "}
+            {isContactMe ? "🗸" : "X"}
+          </Typography>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Button onClick={handleBack}>Back to Dashboard</Button>
+      </Grid>
     </Grid>
   );
 };
