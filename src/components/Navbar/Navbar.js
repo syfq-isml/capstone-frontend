@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,6 +21,36 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const accessToken = localStorage.getItem("accessToken");
+  console.log("accessToken from localStorage:", accessToken);
+  const userId = localStorage.getItem("userId");
+  console.log("userId from localStorage:", userId);
+
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const loadUserName = async () => {
+      try {
+        const getUserName = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/*whatever endpoint URL Syafiq gives you; might have to include userId in the params to get user's full name.`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(getUserName.data);
+      } catch (error) {
+        console.error(
+          "Error occurred while getting user's name from database.",
+          error
+        );
+      }
+    };
+    if (accessToken && userId) {
+      loadUserName();
+    } else return;
+  }, [accessToken, userId, navigate]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
