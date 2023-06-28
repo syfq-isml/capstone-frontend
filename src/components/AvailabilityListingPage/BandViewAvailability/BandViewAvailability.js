@@ -9,15 +9,10 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { format } from "date-fns";
+import formatDate from "../../utils/formatDate";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
@@ -76,7 +71,11 @@ const BandViewAvailability = () => {
   };
 
   const handleStartDateChange = (date) => {
-    setStartDate(format(date, "y-MM-dd'T'HH:mm"));
+    setStartDate(formatDate(date));
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(formatDate(date));
   };
 
   return (
@@ -132,16 +131,16 @@ const BandViewAvailability = () => {
               />
             </LocalizationProvider>
           </Box>
-          <Box>
-            <Typography>{startDate.toString()}</Typography>
-          </Box>
 
           <Box>
             <Typography>
               <b>End: </b>
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker />
+              <DateTimePicker
+                onChange={handleEndDateChange}
+                format="d/M/y H:m"
+              />
             </LocalizationProvider>
           </Box>
           <Button>Submit</Button>
