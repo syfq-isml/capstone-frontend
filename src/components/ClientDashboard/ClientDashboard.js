@@ -2,13 +2,48 @@ import { useEffect } from "react";
 import { Typography, Stack, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-
+import axios from "axios";
 import BookingCard from "./BookingCard/BookingCard";
 
 import "./ClientDashboard.css";
 
 const ClientDashboard = () => {
   const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem("accessToken");
+  console.log(accessToken);
+
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const checkIfAccessTokenIsValid = async () => {
+      try {
+        const checkAccessToken = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/validate`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(checkAccessToken.data.msg);
+        if (checkAccessToken.data.msg === "Valid Token") {
+          return;
+        } else {
+          navigate("/homepage");
+        }
+      } catch (error) {
+        console.error(
+          "Error occurred while checking if user was logged in",
+          error
+        );
+      }
+    };
+    if (accessToken) {
+      checkIfAccessTokenIsValid();
+    } else navigate("/homepage");
+  }, [accessToken, navigate]);
+
   let myBookings = [
     {
       id: 1,

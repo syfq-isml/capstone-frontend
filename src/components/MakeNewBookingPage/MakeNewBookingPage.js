@@ -1,25 +1,77 @@
 import React, { useState, useEffect } from "react";
-
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
-const SignUpPage = () => {
+const MakeNewBookingPage = () => {
   const [state, setState] = useState({
-    nameInput: "",
-    emailInput: "",
-    passwordInput: "",
-    phoneNumberInput: "",
+    dateInput: "",
+    timeInput: "",
+    venueInput: "",
+    eventNameInput: "",
   });
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken");
+  console.log(accessToken);
 
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const checkIfAccessTokenIsValid = async () => {
+      try {
+        const checkAccessToken = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/validate`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(checkAccessToken.data.msg);
+        if (checkAccessToken.data.msg === "Valid Token") {
+          return;
+        } else {
+          navigate("/homepage");
+        }
+      } catch (error) {
+        console.error(
+          "Error occurred while checking if user was logged in",
+          error
+        );
+      }
+    };
+    if (accessToken) {
+      checkIfAccessTokenIsValid();
+    } else navigate("/homepage");
+  }, [accessToken, navigate]);
+
+  useEffect(() => {
+    const loadAllGenres = async () => {
+      try {
+        const getAllGenres = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/genres`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(getAllGenres);
+      } catch (error) {
+        console.error("Error occurred while loading all genres", error);
+      }
+    };
+    if (accessToken) {
+      loadAllGenres();
+    }
+  }, [accessToken]);
+
+  //logic for "Back to main" button to navigate to default home page for logged in users:
   const navigateToHomePage = () => {
     navigate("/");
   };
-  //   useEffect(() => {
-  //     logic to check if user is already logged in, if yes then redirect to default home page for logged in users
-  //   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,46 +121,44 @@ const SignUpPage = () => {
           <TextField
             required
             autoComplete="off"
-            value={state.nameInput}
+            value={state.dateInput}
             size="small"
-            id="nameInput"
-            type="name"
-            label="Name"
+            id="dateInput"
+            type="date"
             onChange={handleChange}
           ></TextField>
           <TextField
             required
             autoComplete="off"
-            value={state.emailInput}
+            value={state.timeInput}
             size="small"
-            id="emailInput"
-            type="email"
-            label="Email"
+            id="timeInput"
+            type="time"
             onChange={handleChange}
           ></TextField>
           <TextField
             required
             autoComplete="off"
-            value={state.passwordInput}
+            value={state.venueInput}
             size="small"
-            id="passwordInput"
-            type="password"
-            label="Password"
+            id="venueInput"
+            type="venue"
+            label="Venue"
             onChange={handleChange}
           ></TextField>
           <TextField
             required
             autoComplete="off"
-            value={state.phoneNumberInput}
+            value={state.eventNameInput}
             size="small"
-            id="phoneNumberInput"
-            type="phonenumber"
-            label="Phone No."
+            id="eventNameInput"
+            type="eventname"
+            label="Event Name"
             onChange={handleChange}
           ></TextField>
           <br />
           <Button type="submit" variant="contained">
-            Sign Up
+            Check Availability
           </Button>
         </Stack>
       </form>
@@ -125,4 +175,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default MakeNewBookingPage;

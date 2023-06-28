@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["Bands", "Sign Up", "Login"];
+const pages = ["Bands", "New Booking", "Your Bookings"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -36,11 +37,17 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  const onClickLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    navigate("/homepage");
+  };
+
   const handleNavigation = (page) => {
     const pageName = {
       Bands: "bands",
-      "Sign Up": "signup",
-      Login: "login",
+      "Your Bookings": "/",
+      "New Booking": "makenewbooking",
     };
     return pageName[page];
   };
@@ -166,7 +173,15 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    if (setting === "Logout") {
+                      onClickLogout(); // Call onClickLogout function for "Logout" setting
+                    }
+                    handleCloseUserMenu();
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
