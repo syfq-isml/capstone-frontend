@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Typography, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -9,9 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
 
 const BandListingPage = () => {
-  const bands = [
+  const seedBands = [
     {
       id: 1,
       name: "Amplified",
@@ -273,6 +274,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       ], // arr of strs
     }, // arr of strs
   ];
+  const [bands, setBands] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
   const [genres, setGenres] = useState([
     {
@@ -327,6 +329,18 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
   const handleChange = (event) => {
     setSelectedGenre(event.target.value);
   };
+
+  useEffect(() => {
+    const getBands = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/bands/genres`)
+        .then((res) => {
+          console.log(res.data);
+          setBands(res.data);
+        });
+    };
+    getBands();
+  }, []);
 
   return (
     <Stack
