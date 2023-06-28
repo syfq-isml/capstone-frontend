@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,41 +14,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["Bands", "Sign Up", "Login", "New Booking"];
+const pages = ["Bands", "New Booking", "Your Bookings"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
-
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      try {
-        const getUserInfo = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/auth/*wait for Syafiq's end URL route for getting user info*`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log(getUserInfo);
-        //  once Syafiq sends you his endpoint URL, plug into line 31 and then check what you get for getUserInfo. Proceed to fish out the relevant data and responses from getUserInfo
-        // and set conditionals to route the user to the correct pages.
-      } catch (error) {
-        console.error(
-          "Error occurred while checking if user had active cart",
-          error
-        );
-      }
-    };
-    if (accessToken) {
-      loadUserInfo();
-    } else navigate("/homepage");
-  }, [accessToken, navigate]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -67,14 +39,14 @@ const Navbar = () => {
 
   const onClickLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
     navigate("/homepage");
   };
 
   const handleNavigation = (page) => {
     const pageName = {
       Bands: "bands",
-      "Sign Up": "signup",
-      Login: "login",
+      "Your Bookings": "/",
       "New Booking": "makenewbooking",
     };
     return pageName[page];

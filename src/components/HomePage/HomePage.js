@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Typography,
@@ -9,6 +9,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -23,6 +25,40 @@ const HomePage = () => {
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+
+  const accessToken = localStorage.getItem("accessToken");
+  console.log(accessToken);
+
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const checkIfAccessTokenIsValid = async () => {
+      try {
+        const checkAccessToken = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/validate`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(checkAccessToken.data.msg);
+        if (checkAccessToken.data.msg === "Valid Token") {
+          navigate("/");
+        } else {
+          navigate("/homepage");
+        }
+      } catch (error) {
+        console.error(
+          "Error occurred while checking if user was logged in",
+          error
+        );
+      }
+    };
+    if (accessToken) {
+      checkIfAccessTokenIsValid();
+    } else return;
+  }, [accessToken, navigate]);
 
   // THIS IS FOR HANDLING THE OPENING AND CLOSING OF THE LOGIN MODAL:
   const handleOpenLoginModal = () => {
@@ -59,18 +95,17 @@ const HomePage = () => {
         }
       );
 
-      console.log(response.data.token);
+      console.log(response.data);
       localStorage.setItem("accessToken", response.data.token);
-      //  add extra code to store userID in local storage
-
+      localStorage.setItem("userId", response.data.id);
       setState({
         emailInput: "",
         passwordInput: "",
       });
-
-      navigate("/bands");
+      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Invalid Email or Password.");
     }
   };
   // THIS IS THE LOGIC FOR WHEN USER HITS THE SIGN UP BUTTON AFTER FILLING UP THE SIGN UP FORM FIELDS:
@@ -88,9 +123,9 @@ const HomePage = () => {
         }
       );
 
-      console.log(response.data.token);
+      console.log(response.data);
       localStorage.setItem("accessToken", response.data.token);
-      //  add extra code to store userID in local storage
+      localStorage.setItem("userId", response.data.id);
 
       setState({
         newUserNameInput: "",
@@ -98,10 +133,10 @@ const HomePage = () => {
         newUserPasswordInput: "",
         newUserPhoneNumberInput: "",
       });
-
-      navigate("/bands");
+      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("An account already exists with this email.");
     }
   };
 

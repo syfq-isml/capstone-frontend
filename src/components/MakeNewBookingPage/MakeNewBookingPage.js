@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const MakeNewBookingPage = () => {
   const [state, setState] = useState({
@@ -16,6 +16,38 @@ const MakeNewBookingPage = () => {
   const accessToken = localStorage.getItem("accessToken");
   console.log(accessToken);
 
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const checkIfAccessTokenIsValid = async () => {
+      try {
+        const checkAccessToken = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/validate`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(checkAccessToken.data.msg);
+        if (checkAccessToken.data.msg === "Valid Token") {
+          return;
+        } else {
+          navigate("/homepage");
+        }
+      } catch (error) {
+        console.error(
+          "Error occurred while checking if user was logged in",
+          error
+        );
+      }
+    };
+    if (accessToken) {
+      checkIfAccessTokenIsValid();
+    } else navigate("/homepage");
+  }, [accessToken, navigate]);
+
+  //logic for "Back to main" button to navigate to default home page for logged in users:
   const navigateToHomePage = () => {
     navigate("/");
   };
