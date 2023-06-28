@@ -15,6 +15,7 @@ import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
 import ClientViewBooking from "./components/ClientDashboard/ClientViewBooking/ClientViewBooking";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminViewBooking from "./components/AdminDashboard/AdminViewBooking/AdminViewBooking";
+import AvailabilityListingPage from "./components/AvailabilityListingPage/AvailabilityListingPage";
 
 class App extends React.Component {
   render() {
@@ -47,6 +48,10 @@ class App extends React.Component {
             <Route
               path="/admin-booking-request"
               element={<AdminViewBooking />}
+            />
+            <Route
+              path="/admin-availability"
+              element={<AvailabilityListingPage />}
             />
           </Routes>
         </BrowserRouter>
