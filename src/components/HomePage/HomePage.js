@@ -61,6 +61,7 @@ const HomePage = () => {
 
       console.log(response.data.token);
       localStorage.setItem("accessToken", response.data.token);
+      //  add extra code to store userID in local storage
 
       setState({
         emailInput: "",
@@ -89,6 +90,7 @@ const HomePage = () => {
 
       console.log(response.data.token);
       localStorage.setItem("accessToken", response.data.token);
+      //  add extra code to store userID in local storage
 
       setState({
         newUserNameInput: "",
@@ -102,14 +104,6 @@ const HomePage = () => {
       console.log(error);
     }
   };
-
-  // const signUpButton = () => {
-  //   navigate("/signup");
-  // };
-
-  // const loginButton = () => {
-  //   navigate("/login");
-  // };
 
   return (
     <Stack alignItems={"center"} justifyContent={"center"} my={1}>
@@ -152,27 +146,31 @@ const HomePage = () => {
           <Typography variant="h6" sx={{ mb: 2 }}>
             Log In
           </Typography>
-          <TextField
-            label="Email"
-            type="email"
-            value={state.emailInput}
-            name="emailInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            value={state.passwordInput}
-            name="passwordInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <Button variant="contained" onClick={handleLogin} fullWidth>
-            Log In
-          </Button>
+          <form onSubmit={handleLogin}>
+            <TextField
+              required
+              label="Email"
+              type="email"
+              value={state.emailInput}
+              name="emailInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label="Password"
+              type="password"
+              value={state.passwordInput}
+              name="passwordInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <Button type="submit" variant="contained" fullWidth>
+              Log In
+            </Button>
+          </form>
         </Paper>
       </Modal>
 
@@ -180,47 +178,53 @@ const HomePage = () => {
       <Modal open={isSignUpModalOpen} onClose={handleCloseSignUpModal}>
         <Paper sx={{ p: 4, maxWidth: 400, margin: "0 auto", mt: 10 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Sign Up
+            Register
           </Typography>
-          <TextField
-            label="Name"
-            type="name"
-            value={state.newUserNameInput}
-            name="newUserNameInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Email"
-            type="email"
-            value={state.newUserEmailInput}
-            name="newUserEmailInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            value={state.newUserPasswordInput}
-            name="newUserPasswordInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Phone No."
-            type="Phone Number"
-            value={state.newUserPhoneNumberInput}
-            name="newUserPhoneNumberInput"
-            onChange={handleChange}
-            fullWidth
-            sx={{ mb: 2 }}
-          />
-          <Button variant="contained" onClick={handleSignUp} fullWidth>
-            Sign Up
-          </Button>
+          <form onSubmit={handleSignUp}>
+            <TextField
+              required
+              label="Name"
+              type="name"
+              value={state.newUserNameInput}
+              name="newUserNameInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label="Email"
+              type="email"
+              value={state.newUserEmailInput}
+              name="newUserEmailInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label="Password"
+              type="password"
+              value={state.newUserPasswordInput}
+              name="newUserPasswordInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              label="Phone No."
+              type="Phone Number"
+              value={state.newUserPhoneNumberInput}
+              name="newUserPhoneNumberInput"
+              onChange={handleChange}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <Button type="submit" variant="contained" fullWidth>
+              Sign Up
+            </Button>
+          </form>
         </Paper>
       </Modal>
 
