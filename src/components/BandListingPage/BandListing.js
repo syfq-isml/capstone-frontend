@@ -335,7 +335,7 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
       await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/bands/genres`)
         .then((res) => {
-          console.log(res.data);
+          // console.log("res.data: ", res.data);
           setBands(res.data);
         });
     };
@@ -365,7 +365,11 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
         >
           <MenuItem value="All">All</MenuItem>
           {genres.map((genre) => {
-            return <MenuItem value={genre.name}>{genre.name}</MenuItem>;
+            return (
+              <MenuItem value={genre.name} key={genre.name}>
+                {genre.name}
+              </MenuItem>
+            );
           })}
         </Select>
         <FormHelperText>Filter by Genre</FormHelperText>
