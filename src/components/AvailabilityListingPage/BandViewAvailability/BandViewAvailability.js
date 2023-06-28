@@ -60,7 +60,23 @@ const BandViewAvailability = () => {
     navigate("/admin-availability");
   };
 
-  console.log(AdapterDateFns);
+  const handleDelete = (timeslotId) => {
+    const deleteBand = async () => {
+      await axios
+        .delete(
+          `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("res.data: ", res.data);
+        });
+    };
+    deleteBand();
+  };
 
   return (
     <Grid container justifyContent="center" spacing={2}>
@@ -75,14 +91,24 @@ const BandViewAvailability = () => {
         </Typography>
         {timeslots.map((timeslot) => {
           return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "center" }}
+              key={timeslot.id}
+            >
               <Typography>
-                <b>Start: </b>
+                <b>Id: </b>
+                {timeslot.id}
+                <b> Start: </b>
                 {timeslot.startBlockedTiming}
                 <b> End: </b>
                 {timeslot.endBlockedTiming}
               </Typography>
-              <Button sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}>
+              <Button
+                sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
+                onClick={() => {
+                  handleDelete(timeslot.id);
+                }}
+              >
                 🗑️
               </Button>
             </Box>
