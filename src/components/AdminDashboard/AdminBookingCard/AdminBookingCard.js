@@ -15,6 +15,7 @@ import "./AdminBookingCard.css";
 
 const AdminBookingCard = ({ props }) => {
   const navigate = useNavigate();
+
   const {
     eventName,
     startDateTime,
