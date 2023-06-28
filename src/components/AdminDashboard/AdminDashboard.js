@@ -11,7 +11,6 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
-  console.log("access token: ", accessToken);
   useEffect(() => {
     const getBookings = async () => {
       await axios
