@@ -12,6 +12,10 @@ import Chip from "@mui/material/Chip";
 
 import { useEffect, useState } from "react";
 
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 import {
   Navigate,
   useLocation,
@@ -56,6 +60,8 @@ const BandViewAvailability = () => {
     navigate("/admin-availability");
   };
 
+  console.log(AdapterDateFns);
+
   return (
     <Grid container justifyContent="center" spacing={2}>
       <Grid item xs={12}>
@@ -83,17 +89,27 @@ const BandViewAvailability = () => {
           );
         })}
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid item xs={12} md={6}>
         <Box>
           <Typography variant="h5" my={2}>
             Add Blocked Timing
           </Typography>
-          <Typography>
-            <b>Start: </b> [Day Time Picker]
-          </Typography>
-          <Typography>
-            <b>End: </b> [Day Time Picker]
-          </Typography>
+          <Box>
+            <Typography>
+              <b>Start: </b>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker />
+            </LocalizationProvider>
+          </Box>
+          <Box>
+            <Typography>
+              <b>End: </b>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker />
+            </LocalizationProvider>
+          </Box>
           <Button>Submit</Button>
         </Box>
       </Grid>
