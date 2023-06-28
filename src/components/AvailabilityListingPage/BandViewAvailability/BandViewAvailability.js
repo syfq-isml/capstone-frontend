@@ -1,14 +1,7 @@
-// get the band id as a prop from the BandAvailabilityCard
-// make a GET Request to the server for the availability with the band id
-
 import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 
 import { useEffect, useState } from "react";
 
@@ -24,11 +17,15 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 
+import { format } from "date-fns";
+
 const BandViewAvailability = () => {
   const navigate = useNavigate();
   const { bandId } = useParams();
   const [timeslots, setTimeslots] = useState([]);
   const [band, setBand] = useState({});
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
@@ -78,6 +75,10 @@ const BandViewAvailability = () => {
     deleteBand();
   };
 
+  const handleStartDateChange = (date) => {
+    setStartDate(format(date, "y-MM-dd'T'HH:mm"));
+  };
+
   return (
     <Grid container justifyContent="center" spacing={2}>
       <Grid item xs={12}>
@@ -125,9 +126,16 @@ const BandViewAvailability = () => {
               <b>Start: </b>
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker />
+              <DateTimePicker
+                onChange={handleStartDateChange}
+                format="d/M/y H:m"
+              />
             </LocalizationProvider>
           </Box>
+          <Box>
+            <Typography>{startDate.toString()}</Typography>
+          </Box>
+
           <Box>
             <Typography>
               <b>End: </b>
