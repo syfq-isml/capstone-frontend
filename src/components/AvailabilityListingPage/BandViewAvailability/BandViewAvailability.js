@@ -23,7 +23,8 @@ import axios from "axios";
 const BandViewAvailability = () => {
   const navigate = useNavigate();
   const { bandId } = useParams();
-  const [availability, setAvailability] = useState([]);
+  const [timeslots, setTimeslots] = useState([]);
+  const [band, setBand] = useState({});
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
@@ -36,8 +37,18 @@ const BandViewAvailability = () => {
         })
         .then((res) => {
           console.log("res.data: ", res.data);
+          setTimeslots(res.data);
         });
     };
+    const getBandInfo = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`)
+        .then((res) => {
+          console.log("Band res.data: ", res.data);
+          setBand(res.data);
+        });
+    };
+    getBandInfo();
     getBookings();
   }, []);
 
@@ -47,8 +58,47 @@ const BandViewAvailability = () => {
 
   return (
     <Grid container justifyContent="center" spacing={2}>
-      <Grid item>
-        <Typography>View Band Availability</Typography>
+      <Grid item xs={12}>
+        <Typography variant="h4" my={2}>
+          {band.name} Availability
+        </Typography>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Typography variant="h5" my={2}>
+          Blocked Timings
+        </Typography>
+        {timeslots.map((timeslot) => {
+          return (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography>
+                <b>Start: </b>
+                {timeslot.startBlockedTiming}
+                <b> End: </b>
+                {timeslot.endBlockedTiming}
+              </Typography>
+              <Button sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}>
+                🗑️
+              </Button>
+            </Box>
+          );
+        })}
+      </Grid>
+      <Grid xs={12} md={6}>
+        <Box>
+          <Typography variant="h5" my={2}>
+            Add Blocked Timing
+          </Typography>
+          <Typography>
+            <b>Start: </b> [Day Time Picker]
+          </Typography>
+          <Typography>
+            <b>End: </b> [Day Time Picker]
+          </Typography>
+          <Button>Submit</Button>
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Button onClick={handleBack}>Back to All Availability Dashboard</Button>
       </Grid>
     </Grid>
   );
