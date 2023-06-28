@@ -47,6 +47,27 @@ const MakeNewBookingPage = () => {
     } else navigate("/homepage");
   }, [accessToken, navigate]);
 
+  useEffect(() => {
+    const loadAllGenres = async () => {
+      try {
+        const getAllGenres = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/genres`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(getAllGenres);
+      } catch (error) {
+        console.error("Error occurred while loading all genres", error);
+      }
+    };
+    if (accessToken) {
+      loadAllGenres();
+    }
+  }, [accessToken]);
+
   //logic for "Back to main" button to navigate to default home page for logged in users:
   const navigateToHomePage = () => {
     navigate("/");
@@ -137,7 +158,7 @@ const MakeNewBookingPage = () => {
           ></TextField>
           <br />
           <Button type="submit" variant="contained">
-            Sign Up
+            Check Availability
           </Button>
         </Stack>
       </form>
