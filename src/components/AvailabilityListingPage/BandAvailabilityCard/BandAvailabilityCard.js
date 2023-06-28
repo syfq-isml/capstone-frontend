@@ -9,9 +9,15 @@ import Chip from "@mui/material/Chip";
 import { useState } from "react";
 
 import "./BandAvailabilityCard.css";
+import { useNavigate } from "react-router-dom";
 
 const BandAvailabilityCard = ({ props }) => {
-  const { name, photoUrl, genres } = props;
+  const { name, photoUrl, genres, id } = props;
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/admin-availability/${id}`);
+  };
 
   return (
     <Grid item sm={12} md={6} lg={4} xl={3} my={1}>
@@ -22,8 +28,13 @@ const BandAvailabilityCard = ({ props }) => {
           p: 2,
           cursor: "pointer",
         }}
+        onClick={handleClick}
       >
-        <CardMedia className="band-image" component="img" image={photoUrl} />
+        <CardMedia
+          className="band-image-circle"
+          component="img"
+          image={photoUrl}
+        />
         <Box>
           <Typography gutterBottom variant="h5" component="div">
             {name}

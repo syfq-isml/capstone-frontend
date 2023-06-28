@@ -47,7 +47,9 @@ const BandViewAvailability = () => {
 
   return (
     <Grid container justifyContent="center" spacing={2}>
-      <Typography>View Band Availability</Typography>
+      <Grid item>
+        <Typography>View Band Availability</Typography>
+      </Grid>
     </Grid>
   );
 };
