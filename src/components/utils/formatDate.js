@@ -1,8 +1,13 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 // format date for sending to backend
-const formatDate = (date) => {
+export const formatDate = (date) => {
   return format(date, "y-MM-dd'T'HH:mm");
 };
 
-export default formatDate;
+// format date for front end
+export const formatDateDisplay = (date) => {
+  return format(parseISO(date), "dd/MM/y HH:mm");
+};
+
+export * from "./formatDate";

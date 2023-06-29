@@ -12,7 +12,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import formatDate from "../../utils/formatDate";
+import { formatDate, formatDateDisplay } from "../../utils/formatDate";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
@@ -123,9 +123,9 @@ const BandViewAvailability = () => {
                 <b>Id: </b>
                 {timeslot.id}
                 <b> Start: </b>
-                {timeslot.startBlockedTiming}
+                {formatDateDisplay(timeslot.startBlockedTiming)}
                 <b> End: </b>
-                {timeslot.endBlockedTiming}
+                {formatDateDisplay(timeslot.endBlockedTiming)}
               </Typography>
               <Button
                 sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
