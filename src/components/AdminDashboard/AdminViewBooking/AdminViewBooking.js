@@ -1,16 +1,15 @@
 import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 
 import { useEffect, useState } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import BandStatusTable from "./BandStatusTable/BandStatusTable";
+
+import { formatDateDisplay } from "../../utils/formatDate";
+import axios from "axios";
 
 const AdminViewBooking = () => {
   const { state } = useLocation();
@@ -24,12 +23,52 @@ const AdminViewBooking = () => {
     isContactMe,
     status,
   } = state;
-  console.log(state);
+
+  const accessToken = localStorage.getItem("accessToken");
 
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate("/admin-dashboard");
+  };
+
+  const [tempBody, setTempBody] = useState({});
+
+  useEffect(() => {
+    const tempBandObj = {};
+    bands.map((band) => {
+      tempBandObj[band.bandBooking.id] = band.bandBooking.status;
+    });
+    setTempBody(tempBandObj);
+  }, [bands]);
+
+  useEffect(() => {
+    console.log("temp: ", tempBody);
+  }, [tempBody]);
+
+  const handleSubmit = () => {
+    // convert tempBody to postBody with required format
+    const postBody = {};
+    let i = 1;
+    Object.entries(tempBody).map((band) => {
+      postBody[`bandBooking${i}Id`] = band[0];
+      postBody[`band${i}Status`] = band[1];
+      i++;
+    });
+    const submitBody = async () => {
+      await axios
+        .put(
+          `${process.env.REACT_APP_BACKEND_URL}/bandbookings/booking/${id}`,
+          postBody,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {});
+    };
+    submitBody();
   };
 
   return (
@@ -53,11 +92,11 @@ const AdminViewBooking = () => {
           </Typography>
           <Typography>
             <b>Start: </b>
-            {startDateTime}
+            {formatDateDisplay(startDateTime)}
           </Typography>
           <Typography>
             <b>End: </b>
-            {endDateTime}
+            {formatDateDisplay(endDateTime)}
           </Typography>
           <Typography>
             <b>Venue: </b>
@@ -68,7 +107,7 @@ const AdminViewBooking = () => {
       <Grid item xs={12}>
         <Box xs={12} sm={6}>
           <Typography variant="h5">Bands:</Typography>
-          <BandStatusTable bands={bands} />
+          <BandStatusTable bands={bands} setTempBody={setTempBody} />
         </Box>
       </Grid>
       <Grid item xs={12}>
@@ -78,6 +117,11 @@ const AdminViewBooking = () => {
             {isContactMe ? "🗸" : "X"}
           </Typography>
         </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Button onClick={handleSubmit} variant="contained">
+          Submit Status Change
+        </Button>
       </Grid>
       <Grid item xs={12}>
         <Button onClick={handleBack}>Back to Dashboard</Button>
