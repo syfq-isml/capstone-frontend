@@ -50,7 +50,7 @@ const Navbar = () => {
     if (accessToken && userId) {
       loadUserName();
     } else return;
-  }, [accessToken, userId, navigate]);
+  }, [accessToken, userId]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

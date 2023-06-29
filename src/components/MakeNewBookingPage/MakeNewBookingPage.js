@@ -32,14 +32,14 @@ const MakeNewBookingPage = () => {
         console.log(checkAccessToken.data.msg);
         if (checkAccessToken.data.msg === "Valid Token") {
           return;
-        } else {
-          navigate("/homepage");
         }
       } catch (error) {
+        console.log(error.response.data.msg);
         console.error(
           "Error occurred while checking if user was logged in",
           error
         );
+        navigate("/homepage");
       }
     };
     if (accessToken) {

@@ -53,6 +53,7 @@ const HomePage = () => {
           "Error occurred while checking if user was logged in",
           error
         );
+        navigate("/homepage");
       }
     };
     if (accessToken) {
