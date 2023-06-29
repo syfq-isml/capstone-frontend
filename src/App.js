@@ -8,6 +8,7 @@ import BandListingPage from "./components/BandListingPage/BandListing";
 import Navbar from "./components/Navbar/Navbar";
 import MakeNewBookingPage from "./components/MakeNewBookingPage/MakeNewBookingPage";
 import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
+import ClientViewBooking from "./components/ClientDashboard/ClientViewBooking/ClientViewBooking";
 
 class App extends React.Component {
   render() {
@@ -33,6 +34,7 @@ class App extends React.Component {
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/makenewbooking" element={<MakeNewBookingPage />} />
             <Route path="/bands" element={<BandListingPage />} />
+            <Route path="/booking-request" element={<ClientViewBooking />} />
           </Routes>
         </BrowserRouter>
       </div>
