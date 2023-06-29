@@ -11,6 +11,9 @@ import BandStatusTable from "./BandStatusTable/BandStatusTable";
 import { formatDateDisplay } from "../../utils/formatDate";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const AdminViewBooking = () => {
   const { state } = useLocation();
   const {
@@ -56,17 +59,27 @@ const AdminViewBooking = () => {
       i++;
     });
     const submitBody = async () => {
-      await axios
-        .put(
-          `${process.env.REACT_APP_BACKEND_URL}/bandbookings/booking/${id}`,
-          postBody,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then((res) => {});
+      try {
+        await axios
+          .put(
+            `${process.env.REACT_APP_BACKEND_URL}/bandbookings/booking/${id}`,
+            postBody,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then((res) => {
+            toast.success("Status Changed!", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          });
+      } catch (e) {
+        toast.error(`Error: ${e.response.data.msg}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     };
     submitBody();
   };
