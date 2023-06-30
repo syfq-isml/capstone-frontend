@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import MakeNewBookingPage from "./components/MakeNewBookingPage/MakeNewBookingPage";
 import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
 import ClientViewBooking from "./components/ClientDashboard/ClientViewBooking/ClientViewBooking";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 class App extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class App extends React.Component {
             <Route path="/makenewbooking" element={<MakeNewBookingPage />} />
             <Route path="/bands" element={<BandListingPage />} />
             <Route path="/booking-request" element={<ClientViewBooking />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
         </BrowserRouter>
       </div>
