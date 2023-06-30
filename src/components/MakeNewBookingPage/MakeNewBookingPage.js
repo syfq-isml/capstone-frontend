@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Stack, TextField, Typography, MenuItem } from "@mui/material";
-// import { toast } from "react-toastify";
+import {
+  Button,
+  Stack,
+  TextField,
+  Typography,
+  MenuItem,
+  Container,
+} from "@mui/material";
+
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const MakeNewBookingPage = () => {
   const [state, setState] = useState({
-    startDateInput: "",
-    endDateInput: "",
-    startTimeInput: "",
-    endTimeInput: "",
+    startDateTimeInput: "",
+    endDateTimeInput: "",
     venueInput: "",
     eventNameInput: "",
     genreInput: "",
@@ -19,6 +26,10 @@ const MakeNewBookingPage = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   console.log(accessToken);
+
+  // For Mobile Responsive View, these const are used in the return block later:
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // useEffect block to check if user is logged in or not:
   useEffect(() => {
@@ -74,21 +85,19 @@ const MakeNewBookingPage = () => {
     }
   }, [accessToken]);
 
+  // Logic for when user hits "Check Availability" Button:
   const handleSubmitAvailability = async (e) => {
     e.preventDefault();
-    // Combine the date and time inputs to create startDateTime and endDateTime
-    const startDateTime = `${state.startDateInput}T${state.startTimeInput}`;
-    const endDateTime = `${state.endDateInput}T${state.endTimeInput}`;
 
-    console.log(startDateTime);
-    console.log(endDateTime);
+    console.log(state.startDateTimeInput);
+    console.log(state.endDateTimeInput);
     try {
       const getBandsAvailability = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/avail/genre/${state.genreInput}`,
 
         {
-          startDateTime: startDateTime,
-          endDateTime: endDateTime,
+          startDateTime: state.startDateTimeInput,
+          endDateTime: state.endDateTimeInput,
         },
         {
           headers: {
@@ -113,111 +122,101 @@ const MakeNewBookingPage = () => {
   };
 
   return (
-    <Stack alignItems={"center"} justifyContent={"center"} my={5}>
-      <Typography variant="h2">
-        Hire the best live musicians for your event. Fill in the form and check
-        artists' availability.
-      </Typography>
-      <br />
-      <br />
+    <Container maxWidth="sm">
+      <Stack alignItems={"center"} justifyContent={"center"} my={5}>
+        <Typography variant="h2" sx={{ textAlign: "center", fontSize: "2rem" }}>
+          Hire the best live musicians for your event. Fill in the form and
+          check artists' availability.
+        </Typography>
+        <br />
+        <br />
 
-      <form onSubmit={handleSubmitAvailability}>
-        <Stack
-          alignItems={"center"}
-          justifyContent={"center"}
-          spacing={2}
-          mt={2}
-        >
-          <div>
-            <TextField
-              required
-              autoComplete="off"
-              value={state.startDateInput}
-              size="small"
-              id="startDateInput"
-              type="date"
-              onChange={handleChange}
-            />
-            <Typography variant="h6" component="span">
-              {" - "}
-            </Typography>
-            <TextField
-              required
-              autoComplete="off"
-              value={state.endDateInput}
-              size="small"
-              id="endDateInput"
-              type="date"
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <TextField
-              required
-              autoComplete="off"
-              value={state.startTimeInput}
-              size="small"
-              id="startTimeInput"
-              type="time"
-              onChange={handleChange}
-            />
-            <Typography variant="h6" component="span">
-              {" - "}
-            </Typography>
-            <TextField
-              required
-              autoComplete="off"
-              value={state.endTimeInput}
-              size="small"
-              id="endTimeInput"
-              type="time"
-              onChange={handleChange}
-            />
-          </div>
-          <TextField
-            required
-            autoComplete="off"
-            value={state.venueInput}
-            size="small"
-            id="venueInput"
-            type="venue"
-            label="Venue"
-            onChange={handleChange}
-          ></TextField>
-          <TextField
-            required
-            autoComplete="off"
-            value={state.eventNameInput}
-            size="small"
-            id="eventNameInput"
-            type="eventname"
-            label="Event Name"
-            onChange={handleChange}
-          ></TextField>
-          <TextField
-            required
-            autoComplete="off"
-            select
-            value={state.genreInput}
-            size="small"
-            id="genreInput"
-            label="Genre"
-            onChange={handleGenreChange}
-            sx={{ width: "200px" }}
+        <form onSubmit={handleSubmitAvailability}>
+          <Stack
+            alignItems={"center"}
+            justifyContent={"center"}
+            spacing={2}
+            mt={2}
           >
-            {genres.map((genre) => (
-              <MenuItem value={genre.id} key={genre.name}>
-                {genre.name}
-              </MenuItem>
-            ))}
-          </TextField>
-          <br />
-          <Button type="submit" variant="contained">
-            Check Availability
-          </Button>
-        </Stack>
-      </form>
-    </Stack>
+            <div>
+              <TextField
+                autoComplete="off"
+                value={state.startDateTimeInput}
+                defaultValue
+                size="small"
+                id="startDateTimeInput"
+                type="datetime-local"
+                label="Start Date & Time"
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+                sx={{
+                  width: isMobile ? "100%" : "auto", // Adjust the width based on screen size
+                }}
+              />
+              <Typography variant="h6" component="span">
+                {" - "}
+              </Typography>
+              <TextField
+                autoComplete="off"
+                value={state.endDateTimeInput}
+                size="small"
+                id="endDateTimeInput"
+                type="datetime-local"
+                label="End Date & Time"
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+                sx={{
+                  width: isMobile ? "100%" : "auto", // Adjust the width based on screen size
+                }}
+              />
+            </div>
+
+            <TextField
+              required
+              autoComplete="off"
+              value={state.venueInput}
+              size="small"
+              id="venueInput"
+              type="venue"
+              label="Venue"
+              onChange={handleChange}
+            ></TextField>
+            <TextField
+              required
+              autoComplete="off"
+              value={state.eventNameInput}
+              size="small"
+              id="eventNameInput"
+              type="eventname"
+              label="Event Name"
+              onChange={handleChange}
+            ></TextField>
+            <TextField
+              required
+              autoComplete="off"
+              select
+              value={state.genreInput}
+              size="small"
+              id="genreInput"
+              label="Genre"
+              onChange={handleGenreChange}
+              sx={{ width: "200px" }}
+            >
+              {genres.map((genre) => (
+                <MenuItem value={genre.id} key={genre.name}>
+                  {genre.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <br />
+
+            <Button type="submit" variant="contained" sx={{ width: "200px" }}>
+              Check Availability
+            </Button>
+          </Stack>
+        </form>
+      </Stack>
+    </Container>
   );
 };
 

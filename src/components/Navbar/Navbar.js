@@ -13,6 +13,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import Grid from "@mui/material/Grid";
 
 const pages = ["Bands", "New Booking", "Your Bookings"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -26,31 +27,11 @@ const Navbar = () => {
   console.log("accessToken from localStorage:", accessToken);
   const userId = localStorage.getItem("userId");
   console.log("userId from localStorage:", userId);
+  const userName = localStorage.getItem("name");
+  console.log("name from localStorage:", userName);
 
-  // useEffect block to check if user is logged in or not:
-  useEffect(() => {
-    const loadUserName = async () => {
-      try {
-        const getUserName = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/*whatever endpoint URL Syafiq gives you; might have to include userId in the params to get user's full name.`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log(getUserName.data);
-      } catch (error) {
-        console.error(
-          "Error occurred while getting user's name from database.",
-          error
-        );
-      }
-    };
-    if (accessToken && userId) {
-      loadUserName();
-    } else return;
-  }, [accessToken, userId]);
+  // const put here to split the first and last name in the name of user. For display of ONLY firstName in navbar.
+  const firstName = userName ? userName.split(" ")[0] : "";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -70,6 +51,7 @@ const Navbar = () => {
   const onClickLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userId");
+    localStorage.removeItem("name");
     navigate("/homepage");
   };
 
@@ -181,11 +163,27 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <Grid container alignItems="center" spacing={1}>
+              {firstName && (
+                <Grid item>
+                  <Typography variant="subtitle1" sx={{ color: "white" }}>
+                    {firstName}
+                  </Typography>
+                </Grid>
+              )}
+              {firstName && (
+                <Grid item>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt={firstName}
+                        src="/static/images/avatar/2.jpg"
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              )}
+            </Grid>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
