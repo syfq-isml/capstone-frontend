@@ -60,6 +60,9 @@ const MakeNewBookingPage = () => {
           "Error occurred while checking if user was logged in",
           error
         );
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
         navigate("/homepage");
       }
     };
