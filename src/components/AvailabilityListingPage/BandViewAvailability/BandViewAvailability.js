@@ -12,7 +12,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import formatDate from "../../utils/formatDate";
+import { formatDate, formatDateDisplay } from "../../utils/formatDate";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
@@ -23,19 +23,21 @@ const BandViewAvailability = () => {
   const [endDate, setEndDate] = useState("");
 
   const accessToken = localStorage.getItem("accessToken");
+
+  const getAvail = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("res.data: ", res.data);
+        setTimeslots(res.data);
+      });
+  };
+
   useEffect(() => {
-    const getBookings = async () => {
-      await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((res) => {
-          console.log("res.data: ", res.data);
-          setTimeslots(res.data);
-        });
-    };
     const getBandInfo = async () => {
       await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`)
@@ -45,7 +47,7 @@ const BandViewAvailability = () => {
         });
     };
     getBandInfo();
-    getBookings();
+    getAvail();
   }, []);
 
   const handleBack = () => {
@@ -53,7 +55,7 @@ const BandViewAvailability = () => {
   };
 
   const handleDelete = (timeslotId) => {
-    const deleteBand = async () => {
+    const deleteAvail = async () => {
       await axios
         .delete(
           `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
@@ -64,10 +66,32 @@ const BandViewAvailability = () => {
           }
         )
         .then((res) => {
-          console.log("res.data: ", res.data);
+          getAvail();
         });
     };
-    deleteBand();
+    deleteAvail();
+  };
+
+  const handleSubmit = () => {
+    const submitAvail = async () => {
+      await axios
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
+          {
+            startBlockedTiming: startDate,
+            endBlockedTiming: endDate,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          getAvail();
+        });
+    };
+    submitAvail();
   };
 
   const handleStartDateChange = (date) => {
@@ -99,9 +123,9 @@ const BandViewAvailability = () => {
                 <b>Id: </b>
                 {timeslot.id}
                 <b> Start: </b>
-                {timeslot.startBlockedTiming}
+                {formatDateDisplay(timeslot.startBlockedTiming)}
                 <b> End: </b>
-                {timeslot.endBlockedTiming}
+                {formatDateDisplay(timeslot.endBlockedTiming)}
               </Typography>
               <Button
                 sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
@@ -143,7 +167,7 @@ const BandViewAvailability = () => {
               />
             </LocalizationProvider>
           </Box>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </Box>
       </Grid>
       <Grid item xs={12}>
