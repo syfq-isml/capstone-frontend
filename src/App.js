@@ -10,6 +10,9 @@ import MakeNewBookingPage from "./components/MakeNewBookingPage/MakeNewBookingPa
 import ClientDashboard from "./components/ClientDashboard/ClientDashboard";
 import ClientViewBooking from "./components/ClientDashboard/ClientViewBooking/ClientViewBooking";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import AdminViewBooking from "./components/AdminDashboard/AdminViewBooking/AdminViewBooking";
+import AvailabilityListingPage from "./components/AvailabilityListingPage/AvailabilityListingPage";
+import BandViewAvailability from "./components/AvailabilityListingPage/BandViewAvailability/BandViewAvailability";
 
 class App extends React.Component {
   render() {
@@ -37,6 +40,18 @@ class App extends React.Component {
             <Route path="/bands" element={<BandListingPage />} />
             <Route path="/booking-request" element={<ClientViewBooking />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route
+              path="/admin-booking-request"
+              element={<AdminViewBooking />}
+            />
+            <Route
+              path="/admin-availability"
+              element={<AvailabilityListingPage />}
+            />
+            <Route
+              path="/admin-availability/:bandId"
+              element={<BandViewAvailability />}
+            />
           </Routes>
         </BrowserRouter>
       </div>

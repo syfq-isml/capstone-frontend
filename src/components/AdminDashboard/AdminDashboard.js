@@ -10,13 +10,17 @@ import "./AdminDashboard.css";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
-
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
     const getBookings = async () => {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/bookings/all`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/bookings`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
         .then((res) => {
-          console.log(res.data);
+          console.log("res.data: ", res.data);
           setBookings(res.data);
         });
     };
@@ -31,8 +35,10 @@ const AdminDashboard = () => {
       <Box my={1}>
         {!bookings.length && (
           <Box>
-            <Typography className="client-dashboard-emoji">😪</Typography>
-            <Typography>All users have no bookings.</Typography>
+            <Typography className="client-dashboard-emoji">🔒</Typography>
+            <Typography>
+              You do not have permission to view this page.
+            </Typography>
           </Box>
         )}
       </Box>
@@ -40,8 +46,8 @@ const AdminDashboard = () => {
         <Grid container>
           {bookings.map((booking) => {
             return (
-              <Grid item xs={12} sm={6} md={4}>
-                <AdminBookingCard key={booking.eventName} props={booking} />
+              <Grid item xs={12} sm={6} md={4} key={booking.eventName}>
+                <AdminBookingCard props={booking} />
               </Grid>
             );
           })}

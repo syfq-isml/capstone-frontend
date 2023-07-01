@@ -15,13 +15,14 @@ import "./AdminBookingCard.css";
 
 const AdminBookingCard = ({ props }) => {
   const navigate = useNavigate();
+
   const {
     eventName,
     startDateTime,
     endDateTime,
     venue,
     status,
-    clientId,
+    client,
     bands,
   } = props;
   const [bookingStatusClass, setBookingStatusClass] = useState("pending");
@@ -56,7 +57,7 @@ const AdminBookingCard = ({ props }) => {
   }, [bands]);
 
   const handleView = () => {
-    navigate("/booking-request", { state: props });
+    navigate("/admin-booking-request", { state: props });
   };
 
   return (
@@ -84,7 +85,7 @@ const AdminBookingCard = ({ props }) => {
         </Typography>
         <Typography>
           <b>Client: </b>
-          {clientId}
+          {client.name}
         </Typography>
         <Typography>
           <b>Confirmed Musician:</b> {bandStatus}
