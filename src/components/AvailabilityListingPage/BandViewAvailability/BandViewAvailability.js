@@ -1,30 +1,26 @@
-// get the band id as a prop from the BandAvailabilityCard
-// make a GET Request to the server for the availability with the band id
-
 import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 
 import { useEffect, useState } from "react";
 
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+import formatDate from "../../utils/formatDate";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
   const { bandId } = useParams();
   const [timeslots, setTimeslots] = useState([]);
   const [band, setBand] = useState({});
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
@@ -56,6 +52,32 @@ const BandViewAvailability = () => {
     navigate("/admin-availability");
   };
 
+  const handleDelete = (timeslotId) => {
+    const deleteBand = async () => {
+      await axios
+        .delete(
+          `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("res.data: ", res.data);
+        });
+    };
+    deleteBand();
+  };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(formatDate(date));
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(formatDate(date));
+  };
+
   return (
     <Grid container justifyContent="center" spacing={2}>
       <Grid item xs={12}>
@@ -69,31 +91,58 @@ const BandViewAvailability = () => {
         </Typography>
         {timeslots.map((timeslot) => {
           return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "center" }}
+              key={timeslot.id}
+            >
               <Typography>
-                <b>Start: </b>
+                <b>Id: </b>
+                {timeslot.id}
+                <b> Start: </b>
                 {timeslot.startBlockedTiming}
                 <b> End: </b>
                 {timeslot.endBlockedTiming}
               </Typography>
-              <Button sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}>
+              <Button
+                sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
+                onClick={() => {
+                  handleDelete(timeslot.id);
+                }}
+              >
                 🗑️
               </Button>
             </Box>
           );
         })}
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid item xs={12} md={6}>
         <Box>
           <Typography variant="h5" my={2}>
             Add Blocked Timing
           </Typography>
-          <Typography>
-            <b>Start: </b> [Day Time Picker]
-          </Typography>
-          <Typography>
-            <b>End: </b> [Day Time Picker]
-          </Typography>
+          <Box>
+            <Typography>
+              <b>Start: </b>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                onChange={handleStartDateChange}
+                format="d/M/y H:m"
+              />
+            </LocalizationProvider>
+          </Box>
+
+          <Box>
+            <Typography>
+              <b>End: </b>
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                onChange={handleEndDateChange}
+                format="d/M/y H:m"
+              />
+            </LocalizationProvider>
+          </Box>
           <Button>Submit</Button>
         </Box>
       </Grid>
