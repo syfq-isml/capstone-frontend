@@ -53,6 +53,10 @@ const HomePage = () => {
           "Error occurred while checking if user was logged in",
           error
         );
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
+        navigate("/homepage");
       }
     };
     if (accessToken) {
@@ -95,9 +99,10 @@ const HomePage = () => {
         }
       );
 
-      console.log(response.data);
+      console.log(response.data.name);
       localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("name", response.data.name);
       setState({
         emailInput: "",
         passwordInput: "",
@@ -126,6 +131,7 @@ const HomePage = () => {
       console.log(response.data);
       localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("name", response.data.name);
 
       setState({
         newUserNameInput: "",

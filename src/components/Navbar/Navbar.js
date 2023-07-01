@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import Grid from "@mui/material/Grid";
 
 const pages = ["Bands", "New Booking", "Your Bookings"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -21,6 +21,16 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const accessToken = localStorage.getItem("accessToken");
+  console.log("accessToken from localStorage:", accessToken);
+  const userId = localStorage.getItem("userId");
+  console.log("userId from localStorage:", userId);
+  const userName = localStorage.getItem("name");
+  console.log("name from localStorage:", userName);
+
+  // const put here to split the first and last name in the name of user. For display of ONLY firstName in navbar.
+  const firstName = userName ? userName.split(" ")[0] : "";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,6 +50,7 @@ const Navbar = () => {
   const onClickLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userId");
+    localStorage.removeItem("name");
     navigate("/homepage");
   };
 
@@ -151,11 +162,27 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <Grid container alignItems="center" spacing={1}>
+              {firstName && (
+                <Grid item>
+                  <Typography variant="subtitle1" sx={{ color: "white" }}>
+                    {firstName}
+                  </Typography>
+                </Grid>
+              )}
+              {firstName && (
+                <Grid item>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt={firstName}
+                        src="/static/images/avatar/2.jpg"
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              )}
+            </Grid>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

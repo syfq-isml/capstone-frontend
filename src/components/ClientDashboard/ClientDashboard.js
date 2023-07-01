@@ -31,14 +31,16 @@ const ClientDashboard = () => {
         console.log(checkAccessToken.data.msg);
         if (checkAccessToken.data.msg === "Valid Token") {
           return;
-        } else {
-          navigate("/homepage");
         }
       } catch (error) {
+        console.log(error.response.data.msg);
         console.error(
           "Error occurred while checking if user was logged in",
           error
         );
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
         navigate("/homepage");
       }
     };
