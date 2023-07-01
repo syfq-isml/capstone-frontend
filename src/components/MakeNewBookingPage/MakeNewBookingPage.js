@@ -17,7 +17,8 @@ import {
   Modal,
   Paper,
 } from "@mui/material";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -33,6 +34,7 @@ const MakeNewBookingPage = () => {
   const [bandsAvailable, setBandsAvailable] = useState([]);
   const [selectedBandInfo, setSelectedBandInfo] = useState(null);
   const [selectedBands, setSelectedBands] = useState([]);
+  const [selectedBandIdRank, setSelectedBandIdRank] = useState([]);
   const [isViewInfoModalOpen, setIsViewInfoModalOpen] = useState(false);
   const [isContactMe, setIsContactMe] = useState("");
   const [isReviewing, setIsReviewing] = useState(false);
@@ -105,33 +107,6 @@ const MakeNewBookingPage = () => {
     }
   }, [accessToken]);
 
-  // Logic for when user hits "Check Availability" Button:
-  const handleSubmitCheckAvailability = async (e) => {
-    e.preventDefault();
-
-    console.log(state.startDateTimeInput);
-    console.log(state.endDateTimeInput);
-    try {
-      const getBandsAvailability = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/avail/genre/${state.genreInput}`,
-
-        {
-          startDateTime: state.startDateTimeInput,
-          endDateTime: state.endDateTimeInput,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(getBandsAvailability.data);
-      setBandsAvailable(getBandsAvailability.data);
-    } catch (error) {
-      console.error("Error occurred while finding available bands:", error);
-    }
-  };
-
   // Logic for when user selects their top 3 bands in order of preference:
   const handleSelectBand = (band) => {
     setSelectedBands((selectedBands) => {
@@ -165,20 +140,104 @@ const MakeNewBookingPage = () => {
       ranking: index + 1,
     }));
     console.log(updatedBands);
+    setSelectedBandIdRank(
+      updatedBands.map((band) => ({
+        id: band.id,
+        ranking: band.ranking,
+      }))
+    );
     return updatedBands;
+  };
+  console.log("selectedBandIdRank:", selectedBandIdRank);
+  // console.log(selectedBandIdRank[0].ranking);
+  // console.log(selectedBandIdRank[0].id);
+
+  // Logic for when user hits "Check Availability" Button:
+  const handleSubmitCheckAvailability = async (e) => {
+    e.preventDefault();
+
+    console.log(state.startDateTimeInput);
+    console.log(state.endDateTimeInput);
+    try {
+      const getBandsAvailability = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/avail/genre/${state.genreInput}`,
+
+        {
+          startDateTime: state.startDateTimeInput,
+          endDateTime: state.endDateTimeInput,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(getBandsAvailability.data);
+      setBandsAvailable(getBandsAvailability.data);
+    } catch (error) {
+      console.error("Error occurred while finding available bands:", error);
+    }
   };
 
   // Logic for when user hits "Review" Button:
   const handleReview = (e) => {
     e.preventDefault();
-    setIsReviewing(true);
-    setIsEditing(false);
+    if (
+      selectedBandIdRank.length === 3 &&
+      (isContactMe === true || isContactMe === false)
+    ) {
+      setIsReviewing(true);
+      setIsEditing(false);
+    } else {
+      // Show an error message
+      toast.error("Please select 3 bands and choose a booking option.");
+      console.log("Please select exactly three bands.");
+    }
   };
   // Logic for when user hits "Edit" Button:
   const handleEdit = (e) => {
     e.preventDefault();
     setIsReviewing(false);
     setIsEditing(true);
+  };
+
+  // Logic for when user hits "Submit" Button:
+  const handleSubmitBooking = async (e) => {
+    e.preventDefault();
+    try {
+      const submitBooking = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/bookings/user/${userId}/genre/${state.genreInput}`,
+        {
+          startDateTime: state.startDateTimeInput,
+          endDateTime: state.endDateTimeInput,
+          venue: state.venueInput,
+          eventName: state.eventNameInput,
+          isContactMe: isContactMe,
+          band1Id: selectedBandIdRank[0].id,
+          band1Rank: selectedBandIdRank[0].ranking,
+          band2Id: selectedBandIdRank[1].id,
+          band2Rank: selectedBandIdRank[1].ranking,
+          band3Id: selectedBandIdRank[2].id,
+          band3Rank: selectedBandIdRank[2].ranking,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(submitBooking);
+      toast.success(
+        "Hurray! You just made a new booking. It's status is only confirmed AFTER payment."
+      );
+      navigate("/");
+    } catch (error) {
+      console.error(
+        "Error occurred while submitting form data to backend:",
+        error
+      );
+      toast.error("Oh no! Form submissio failed. Please try again.");
+    }
   };
 
   // ALL THE FORM HANDLE CHANGES:
@@ -189,16 +248,16 @@ const MakeNewBookingPage = () => {
 
   const handleGenreChange = (e) => {
     setState({ ...state, genreInput: e.target.value });
-    console.log(state);
+    console.log("genreInput:", state.genreInput);
   };
 
   const handleBookingOptionChange = (e) => {
     setIsContactMe(e.target.value);
   };
+  console.log("isContactMe:", isContactMe);
   //
   //
 
-  console.log("isContactMe:", isContactMe);
   // THIS IS FOR HANDLING THE OPENING AND CLOSING OF THE VIEW INFO MODAL:
   const handleOpenViewInfoModal = (band) => {
     setSelectedBandInfo(band);
@@ -400,7 +459,16 @@ const MakeNewBookingPage = () => {
                         <Button
                           variant="contained"
                           fullWidth
-                          onClick={() => handleSelectBand(band)}
+                          onClick={() => {
+                            if (
+                              selectedBandIdRank.length === 3 &&
+                              !isSelected
+                            ) {
+                              toast.error("You have already selected 3 bands.");
+                            } else {
+                              handleSelectBand(band);
+                            }
+                          }}
                           disabled={isReviewing && !isEditing}
                         >
                           {isSelected ? "Deselect" : "Select"}
@@ -444,8 +512,8 @@ const MakeNewBookingPage = () => {
                     disabled={isReviewing && !isEditing}
                     sx={{ width: isMobile ? "100%" : "200px" }}
                   >
-                    <MenuItem value="true">Contact Me</MenuItem>
-                    <MenuItem value="false">Remove My Booking</MenuItem>
+                    <MenuItem value={true}>Contact Me</MenuItem>
+                    <MenuItem value={false}>Remove My Booking</MenuItem>
                   </TextField>
                   <Button
                     variant="contained"
@@ -465,7 +533,7 @@ const MakeNewBookingPage = () => {
                         width: "200px",
                         backgroundColor: "red",
                       }}
-                      // onClick
+                      onClick={handleSubmitBooking}
                     >
                       Submit Booking
                     </Button>

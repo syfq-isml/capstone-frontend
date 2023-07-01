@@ -85,7 +85,7 @@ const ClientViewBooking = () => {
         <Box>
           <Typography>
             Contact me if all musicians are unavailable:{" "}
-            {isContactMe ? "🗸" : "X"}
+            {isContactMe ? "✔" : "X"}
           </Typography>
         </Box>
       </Grid>
