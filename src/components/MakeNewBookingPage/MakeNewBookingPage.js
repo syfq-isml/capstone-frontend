@@ -9,6 +9,11 @@ import {
   Typography,
   MenuItem,
   Container,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
 } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
@@ -23,6 +28,7 @@ const MakeNewBookingPage = () => {
     genreInput: "",
   });
   const [genres, setGenres] = useState([]);
+  const [bandsAvailable, setBandsAvailable] = useState([]);
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   console.log(accessToken);
@@ -86,7 +92,7 @@ const MakeNewBookingPage = () => {
   }, [accessToken]);
 
   // Logic for when user hits "Check Availability" Button:
-  const handleSubmitAvailability = async (e) => {
+  const handleSubmitCheckAvailability = async (e) => {
     e.preventDefault();
 
     console.log(state.startDateTimeInput);
@@ -105,7 +111,8 @@ const MakeNewBookingPage = () => {
           },
         }
       );
-      console.log(getBandsAvailability);
+      console.log(getBandsAvailability.data);
+      setBandsAvailable(getBandsAvailability.data);
     } catch (error) {
       console.error("Error occurred while finding available bands:", error);
     }
@@ -130,8 +137,7 @@ const MakeNewBookingPage = () => {
         </Typography>
         <br />
         <br />
-
-        <form onSubmit={handleSubmitAvailability}>
+        <form onSubmit={handleSubmitCheckAvailability}>
           <Stack
             alignItems={"center"}
             justifyContent={"center"}
@@ -141,8 +147,8 @@ const MakeNewBookingPage = () => {
             <div>
               <TextField
                 autoComplete="off"
+                required
                 value={state.startDateTimeInput}
-                defaultValue
                 size="small"
                 id="startDateTimeInput"
                 type="datetime-local"
@@ -158,6 +164,7 @@ const MakeNewBookingPage = () => {
               </Typography>
               <TextField
                 autoComplete="off"
+                required
                 value={state.endDateTimeInput}
                 size="small"
                 id="endDateTimeInput"
@@ -215,6 +222,48 @@ const MakeNewBookingPage = () => {
             </Button>
           </Stack>
         </form>
+        {bandsAvailable.length > 0 && (
+          <Grid container spacing={2} mt={4}>
+            {bandsAvailable.map((band) => (
+              <Grid item xs={12} sm={6} md={4} key={band.id}>
+                <Card
+                  sx={{
+                    height: "100%",
+
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      height: "100%",
+                    }}
+                    image={band.photoUrl}
+                    alt={band.name}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6">{band.name}</Typography>
+                  </CardContent>
+                  <CardActions sx={{ marginTop: "auto" }}>
+                    <Stack
+                      direction="column"
+                      spacing={1}
+                      sx={{ width: "100%" }}
+                    >
+                      <Button variant="contained" fullWidth>
+                        View Info
+                      </Button>
+                      <Button variant="contained" fullWidth>
+                        Select
+                      </Button>
+                    </Stack>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Stack>
     </Container>
   );
