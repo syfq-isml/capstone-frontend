@@ -1,11 +1,10 @@
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useEffect, useState } from "react";
 
-export default function StatusSelect({ currentStatus }) {
+export default function StatusSelect({ currentStatus, setTempBody, id }) {
   const [status, setStatus] = useState("Not Contacted");
 
   useEffect(() => {
@@ -14,6 +13,10 @@ export default function StatusSelect({ currentStatus }) {
 
   const handleChange = (event) => {
     setStatus(event.target.value);
+    setTempBody((prevState) => ({
+      ...prevState,
+      [id]: event.target.value,
+    }));
   };
 
   return (

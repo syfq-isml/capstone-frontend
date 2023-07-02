@@ -9,31 +9,7 @@ import StatusSelect from "./StatusSelect";
 
 import { useEffect, useState } from "react";
 
-const BandStatusTable = ({ bands }) => {
-  const [submitBody, setSubmitBody] = useState({});
-
-  useEffect(() => {
-    const submitBodyTemp = {};
-    let i = 1;
-    bands.map((band) => {
-      submitBodyTemp[`bandBooking${i}Id`] = band.bandBooking.id;
-      submitBodyTemp[`band${i}Status`] = band.bandBooking.status;
-      i++;
-    });
-
-    /* create submitBody in this format
-  const obj = {
-    bandBooking1Id: 28,
-    band1Status: "Confirmed",
-    bandBooking2Id: 29,
-    band2Status: "Not Contacted",
-    bandBooking3Id: 30,
-    band3Status: "Rejected",
-  };*/
-
-    setSubmitBody(submitBodyTemp);
-  }, [bands]);
-
+const BandStatusTable = ({ bands, setTempBody }) => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -60,7 +36,11 @@ const BandStatusTable = ({ bands }) => {
                 <TableCell align="right">{band.phoneNumber}</TableCell>
                 <TableCell align="right">{band.email}</TableCell>
                 <TableCell align="right">
-                  <StatusSelect currentStatus={band.bandBooking.status} />
+                  <StatusSelect
+                    currentStatus={band.bandBooking.status}
+                    setTempBody={setTempBody}
+                    id={band.bandBooking.id}
+                  />
                 </TableCell>
               </TableRow>
             );
