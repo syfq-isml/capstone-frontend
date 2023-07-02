@@ -10,6 +10,7 @@ import Chip from "@mui/material/Chip";
 import { useEffect, useState } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import BandStatusTable from "./BandStatusTable/BandStatusTable";
 
 const AdminViewBooking = () => {
   const { state } = useLocation();
@@ -67,19 +68,7 @@ const AdminViewBooking = () => {
       <Grid item xs={12}>
         <Box xs={12} sm={6}>
           <Typography variant="h5">Bands:</Typography>
-          {bands
-            .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
-            .map((band) => {
-              return (
-                <Box key={band.name}>
-                  <Typography>
-                    {band.bandBooking.rank}. <b>{band.name}</b> :{" "}
-                    {band.bandBooking.status} || <b>HP:</b> {band.phoneNumber}{" "}
-                    || <b>Email:</b> {band.email}
-                  </Typography>
-                </Box>
-              );
-            })}
+          <BandStatusTable bands={bands} />
         </Box>
       </Grid>
       <Grid item xs={12}>

@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
+import BandStatusTable from "../../AdminDashboard/AdminViewBooking/BandStatusTable/BandStatusTable";
+
 const ClientViewBooking = () => {
   const { state } = useLocation();
   const {
