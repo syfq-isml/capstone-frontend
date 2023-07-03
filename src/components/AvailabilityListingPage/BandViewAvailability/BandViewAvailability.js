@@ -1,7 +1,4 @@
-import { Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { Typography, Button, Grid, Box } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
@@ -25,26 +22,24 @@ const BandViewAvailability = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const getAvail = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`, {
+    const availInfo = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      .then((res) => {
-        console.log("res.data: ", res.data);
-        setTimeslots(res.data);
-      });
+      }
+    );
+
+    setTimeslots(availInfo.data);
   };
 
   useEffect(() => {
     const getBandInfo = async () => {
-      await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`)
-        .then((res) => {
-          console.log("Band res.data: ", res.data);
-          setBand(res.data);
-        });
+      const bandInfo = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`
+      );
+      setBand(bandInfo.data);
     };
     getBandInfo();
     getAvail();
@@ -56,40 +51,34 @@ const BandViewAvailability = () => {
 
   const handleDelete = (timeslotId) => {
     const deleteAvail = async () => {
-      await axios
-        .delete(
-          `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then((res) => {
-          getAvail();
-        });
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      getAvail();
     };
     deleteAvail();
   };
 
   const handleSubmit = () => {
     const submitAvail = async () => {
-      await axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
-          {
-            startBlockedTiming: startDate,
-            endBlockedTiming: endDate,
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
+        {
+          startBlockedTiming: startDate,
+          endBlockedTiming: endDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then((res) => {
-          getAvail();
-        });
+        }
+      );
+      getAvail();
     };
     submitAvail();
   };
@@ -120,8 +109,6 @@ const BandViewAvailability = () => {
               key={timeslot.id}
             >
               <Typography>
-                <b>Id: </b>
-                {timeslot.id}
                 <b> Start: </b>
                 {formatDateDisplay(timeslot.startBlockedTiming)}
                 <b> End: </b>
