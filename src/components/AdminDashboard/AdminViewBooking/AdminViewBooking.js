@@ -5,13 +5,13 @@ import Box from "@mui/material/Box";
 
 import { useEffect, useState } from "react";
 
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BandStatusTable from "./BandStatusTable/BandStatusTable";
 
 import { formatDateDisplay } from "../../utils/formatDate";
 import axios from "axios";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AdminViewBooking = () => {
