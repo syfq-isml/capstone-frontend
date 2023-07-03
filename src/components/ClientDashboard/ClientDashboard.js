@@ -65,6 +65,10 @@ const ClientDashboard = () => {
     getBookings();
   }, [accessToken]);
 
+  const handleNavigateToNewBookingPage = () => {
+    navigate("/makenewbooking");
+  };
+
   let myBookings = [
     {
       id: 1,
@@ -289,7 +293,9 @@ The String Quartet is VETTA’s flagship service, and is a well-recognised and s
           return <BookingCard key={booking.eventName} props={booking} />;
         })}
       </Box>
-      <Button variant="contained">+ Create New Booking</Button>
+      <Button variant="contained" onClick={handleNavigateToNewBookingPage}>
+        + Create New Booking
+      </Button>
     </Stack>
   );
 };
