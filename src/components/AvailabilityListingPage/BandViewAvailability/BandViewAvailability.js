@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import { formatDate, formatDateDisplay } from "../../utils/formatDate";
+import TimingsTable from "./TimingsTable";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
@@ -92,71 +93,65 @@ const BandViewAvailability = () => {
   };
 
   return (
-    <Grid container justifyContent="center" spacing={2}>
+    <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h4" my={2}>
           {band.name} Availability
         </Typography>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Typography variant="h5" my={2}>
-          Blocked Timings
-        </Typography>
-        {timeslots.map((timeslot) => {
-          return (
-            <Box
-              sx={{ display: "flex", justifyContent: "center" }}
-              key={timeslot.id}
-            >
-              <Typography>
-                <b> Start: </b>
-                {formatDateDisplay(timeslot.startBlockedTiming)}
-                <b> End: </b>
-                {formatDateDisplay(timeslot.endBlockedTiming)}
-              </Typography>
-              <Button
-                sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
-                onClick={() => {
-                  handleDelete(timeslot.id);
-                }}
-              >
-                🗑️
-              </Button>
-            </Box>
-          );
-        })}
-      </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Box>
           <Typography variant="h5" my={2}>
             Add Blocked Timing
           </Typography>
-          <Box>
-            <Typography>
-              <b>Start: </b>
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                onChange={handleStartDateChange}
-                format="d/M/y H:m"
-              />
-            </LocalizationProvider>
-          </Box>
 
-          <Box>
-            <Typography>
-              <b>End: </b>
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                onChange={handleEndDateChange}
-                format="d/M/y H:m"
-              />
-            </LocalizationProvider>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box mx={1} sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography mx={1}>
+                  <b>Start: </b>
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DateTimePicker
+                    onChange={handleStartDateChange}
+                    format="d/M/y H:m"
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
+
+            <Box mx={1} sx={{ display: "flex" }}>
+              <Box mx={1} sx={{ display: "flex", alignItems: "center" }}>
+                <Typography>
+                  <b>End: </b>
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DateTimePicker
+                    onChange={handleEndDateChange}
+                    format="d/M/y H:m"
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
           </Box>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Box m={2}>
+            <Button onClick={handleSubmit} variant="contained">
+              Submit
+            </Button>
+          </Box>
         </Box>
       </Grid>
+      <Grid item xs={12} md={6}>
+        <Typography variant="h5" my={2}>
+          Blocked Timings
+        </Typography>
+        <TimingsTable timeslots={timeslots} handleDelete={handleDelete} />
+      </Grid>
+
       <Grid item xs={12}>
         <Button onClick={handleBack}>Back to All Availability Dashboard</Button>
       </Grid>
