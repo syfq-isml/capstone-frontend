@@ -19,6 +19,8 @@ import {
   PaidOutlined,
 } from "@mui/icons-material";
 
+import { formatDateCard } from "../../utils/formatDate";
+
 const BookingCard = ({ props }) => {
   const navigate = useNavigate();
   const { id, eventName, startDateTime, endDateTime, venue, status } = props;
@@ -73,72 +75,80 @@ const BookingCard = ({ props }) => {
           {/* {statusIcon} */}
           {eventName}
         </Typography>
+        {status === "Pending" && (
+          <Box my={1}>
+            <Paper sx={{ width: "fit-content", backgroundColor: "#CECECE" }}>
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <AccessTime fontSize="small" sx={{ color: "black" }} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
+
+        {status === "Awaiting Payment" && (
+          <Box my={1}>
+            <Paper
+              sx={{ width: "fit-content", backgroundColor: "orange" }}
+              my={1}
+            >
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <PaidOutlined fontSize="small" sx={{ color: "black" }} my={1} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
+
+        {status === "Paid & Confirmed" && (
+          <Box my={1}>
+            <Paper sx={{ width: "fit-content", backgroundColor: "#00DD53" }}>
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <CheckCircleOutlined fontSize="small" sx={{ color: "black" }} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
         <Typography>
           <b>Start: </b>
-          {startDateTime.toString()}
+          {formatDateCard(startDateTime)}
         </Typography>
         <Typography>
           <b>End: </b>
-          {endDateTime.toString()}
+          {formatDateCard(endDateTime)}
         </Typography>
         <Typography>
           <b>Venue: </b>
           {venue}
         </Typography>
-
-        {status === "Pending" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "#CECECE" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <AccessTime fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
-
-        {status === "Awaiting Payment" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "orange" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <PaidOutlined fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
-
-        {status === "Paid & Confirmed" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "#00DD53" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <CheckCircleOutlined fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
 
         <Button onClick={handleView}>View More</Button>
         {status === "Awaiting Payment" ? (

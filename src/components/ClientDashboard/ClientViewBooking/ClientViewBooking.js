@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-import { formatDateDisplay } from "../../utils/formatDate";
+import { formatDateCard } from "../../utils/formatDate";
 import ClientBandStatusTable from "./ClientBandStatusTable";
 import BookingsDetailCard from "../../BookingsDetailCard/BookingsDetailCard";
 
@@ -46,7 +46,7 @@ const ClientViewBooking = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography my={2} variant="h5" m={0}>
-          {formatDateDisplay(startDateTime)} - {formatDateDisplay(endDateTime)}
+          {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
         </Typography>
       </Grid>
       <Grid item xs={12}>
