@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Stack, Button, Box } from "@mui/material";
+import { Typography, Stack, Button, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BookingCard from "./BookingCard/BookingCard";
@@ -74,10 +74,16 @@ const ClientDashboard = () => {
           </Box>
         )}
       </Box>
-      <Box mb={3}>
-        {bookings.map((booking) => {
-          return <BookingCard key={booking.eventName} props={booking} />;
-        })}
+      <Box mb={3} width="100%">
+        <Grid container>
+          {bookings.map((booking) => {
+            return (
+              <Grid item xs={12} sm={6} md={4} key={booking.eventName}>
+                <BookingCard key={booking.eventName} props={booking} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Box>
       <Button variant="contained" onClick={handleNavigateToNewBookingPage}>
         + Create New Booking

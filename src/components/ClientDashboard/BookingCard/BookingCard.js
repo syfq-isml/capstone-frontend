@@ -68,7 +68,7 @@ const BookingCard = ({ props }) => {
   };
 
   return (
-    <Card sx={{ mb: 2 }} align="left">
+    <Card sx={{ m: 2 }} align="left">
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {/* {statusIcon} */}
