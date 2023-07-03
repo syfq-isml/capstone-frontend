@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import "./BookingCard.css";
 import axios from "axios";
 import {
   AccessTime,
@@ -69,7 +68,7 @@ const BookingCard = ({ props }) => {
   };
 
   return (
-    <Card className={`booking-card`} sx={{ mb: 2 }}>
+    <Card sx={{ mb: 2 }} align="left">
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {/* {statusIcon} */}
