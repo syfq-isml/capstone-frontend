@@ -68,7 +68,7 @@ const Navbar = () => {
     const pageName = {
       Bands: "bands",
       "View Bookings": "admin-dashboard",
-      "Manage Availability": "admin-booking-request",
+      "Manage Availability": "admin-availability",
     };
     return pageName[pageForAdmin];
   };
