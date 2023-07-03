@@ -58,6 +58,9 @@ const ClientDashboard = () => {
     getBookings();
   }, [accessToken]);
 
+  const handleNavigateToNewBookingPage = () => {
+    navigate("/makenewbooking");
+  };
   return (
     <Stack alignItems={"center"} justifyContent={"center"} my={1}>
       <Typography variant="h4" my={1} sx={{ textAlign: "center" }}>
@@ -76,7 +79,9 @@ const ClientDashboard = () => {
           return <BookingCard key={booking.eventName} props={booking} />;
         })}
       </Box>
-      <Button variant="contained">+ Create New Booking</Button>
+      <Button variant="contained" onClick={handleNavigateToNewBookingPage}>
+        + Create New Booking
+      </Button>
     </Stack>
   );
 };

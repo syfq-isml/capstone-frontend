@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 
 const pages = ["Bands", "New Booking", "Your Bookings"];
+const pagesForAdmin = ["Bands", "View Bookings", "Manage Availability"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -63,26 +64,35 @@ const Navbar = () => {
     return pageName[page];
   };
 
+  const handleNavigateForAdminPages = (pageForAdmin) => {
+    const pageName = {
+      Bands: "bands",
+      "View Bookings": "admin-dashboard",
+      "Manage Availability": "admin-availability",
+    };
+    return pageName[pageForAdmin];
+  };
+
   return (
     <AppBar position="static" elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant="h4"
             noWrap
             component="a"
-            href="/"
+            href={userName === "admin" ? "/admin-dashboard" : "/"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "Arial",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            Opus
+            OPUS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -114,16 +124,27 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={() => {
-                    navigate(handleNavigation(page));
-                  }}
-                >
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {userName === "admin"
+                ? pagesForAdmin.map((pageForAdmin) => (
+                    <MenuItem
+                      key={pageForAdmin}
+                      onClick={() => {
+                        navigate(handleNavigateForAdminPages(pageForAdmin));
+                      }}
+                    >
+                      <Typography textAlign="center">{pageForAdmin}</Typography>
+                    </MenuItem>
+                  ))
+                : pages.map((page) => (
+                    <MenuItem
+                      key={page}
+                      onClick={() => {
+                        navigate(handleNavigation(page));
+                      }}
+                    >
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
 
@@ -148,17 +169,29 @@ const Navbar = () => {
             Opus
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => {
-                  navigate(handleNavigation(page));
-                }}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            {userName === "admin"
+              ? pagesForAdmin.map((pageForAdmin) => (
+                  <Button
+                    key={pageForAdmin}
+                    onClick={() => {
+                      navigate(handleNavigateForAdminPages(pageForAdmin));
+                    }}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {pageForAdmin}
+                  </Button>
+                ))
+              : pages.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={() => {
+                      navigate(handleNavigation(page));
+                    }}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page}
+                  </Button>
+                ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
