@@ -54,14 +54,24 @@ const BandViewAvailability = () => {
 
   const handleDelete = (timeslotId) => {
     const deleteAvail = async () => {
-      await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        toast.success("Blocked Timing Deleted!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } catch (e) {
+        toast.error(`Error: ${e.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
       getAvail();
     };
     deleteAvail();
@@ -69,30 +79,30 @@ const BandViewAvailability = () => {
 
   const handleSubmit = () => {
     const submitAvail = async () => {
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
-        {
-          startBlockedTiming: startDate,
-          endBlockedTiming: endDate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
+          {
+            startBlockedTiming: startDate,
+            endBlockedTiming: endDate,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        toast.success("Blocked Timing Added!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } catch (e) {
+        toast.error(`Error: ${e.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
       getAvail();
     };
-    try {
-      submitAvail();
-      toast.success("Timeslot added!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    } catch (e) {
-      toast.error(`Error: ${e.response.data.msg}`, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+    submitAvail();
   };
 
   const handleStartDateChange = (e) => {
