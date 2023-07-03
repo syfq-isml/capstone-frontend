@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, Box } from "@mui/material";
+import { Typography, Button, Grid, Box, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
@@ -95,12 +95,12 @@ const BandViewAvailability = () => {
     }
   };
 
-  const handleStartDateChange = (date) => {
-    setStartDate(formatDate(date));
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
   };
 
-  const handleEndDateChange = (date) => {
-    setEndDate(formatDate(date));
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
   };
 
   return (
@@ -111,44 +111,37 @@ const BandViewAvailability = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
+        <Typography variant="h5" my={2}>
+          Add Blocked Timing
+        </Typography>
+
         <Box>
-          <Typography variant="h5" my={2}>
-            Add Blocked Timing
-          </Typography>
+          <Grid>
+            <TextField
+              autoComplete="off"
+              required
+              value={startDate}
+              size="small"
+              id="startDateTimeInput"
+              type="datetime-local"
+              label="Start Date & Time"
+              InputLabelProps={{ shrink: true }}
+              onChange={handleStartDateChange}
+            />
+            <Typography>-</Typography>
+            <TextField
+              autoComplete="off"
+              required
+              value={endDate}
+              size="small"
+              id="endDateTimeInput"
+              type="datetime-local"
+              label="End Date & Time"
+              InputLabelProps={{ shrink: true }}
+              onChange={handleEndDateChange}
+            />
+          </Grid>
 
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Box mx={1} sx={{ display: "flex" }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography mx={1}>
-                  <b>Start: </b>
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DateTimePicker
-                    onChange={handleStartDateChange}
-                    format="d/M/y H:m"
-                  />
-                </LocalizationProvider>
-              </Box>
-            </Box>
-
-            <Box mx={1} sx={{ display: "flex" }}>
-              <Box mx={1} sx={{ display: "flex", alignItems: "center" }}>
-                <Typography>
-                  <b>End: </b>
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DateTimePicker
-                    onChange={handleEndDateChange}
-                    format="d/M/y H:m"
-                  />
-                </LocalizationProvider>
-              </Box>
-            </Box>
-          </Box>
           <Box m={2}>
             <Button onClick={handleSubmit} variant="contained">
               Submit New Blocked Timing

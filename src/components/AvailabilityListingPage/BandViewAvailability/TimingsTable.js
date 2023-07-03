@@ -9,8 +9,6 @@ import {
   Button,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
-
 import { formatDateDisplay } from "../../utils/formatDate";
 
 const TimingsTable = ({ timeslots, handleDelete }) => {
