@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import { formatDateCard } from "../../utils/formatDate";
+import { formatDateDisplay } from "../../utils/formatDate";
 import BandStatusTable from "./BandStatusTable/BandStatusTable";
+import BookingsDetailCard from "../../BookingsDetailCard/BookingsDetailCard";
 
 const AdminViewBooking = () => {
   const { state } = useLocation();
@@ -85,24 +86,15 @@ const AdminViewBooking = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography my={2} variant="h5" m={0}>
-          {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
+          {formatDateDisplay(startDateTime)} - {formatDateDisplay(endDateTime)}
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5">Event Details:</Typography>
-        <Box>
-          <Typography>
-            <b>Booking Id:</b> {id}
-          </Typography>
-          <Typography>
-            <b>Status: </b>
-            {status}
-          </Typography>
-
-          <Typography>
-            <b>Venue: </b>
-            {venue}
-          </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }} my={1}>
+          <BookingsDetailCard title={"Booking Id"} content={id} />
+          <BookingsDetailCard title={"Status"} content={status} />
+          <BookingsDetailCard title={"Venue"} content={venue} />
         </Box>
       </Grid>
       <Grid item xs={12} sm={6}>

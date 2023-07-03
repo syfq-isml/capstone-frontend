@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -11,7 +11,9 @@ import { useEffect, useState } from "react";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-import BandStatusTable from "../../AdminDashboard/AdminViewBooking/BandStatusTable/BandStatusTable";
+import { formatDateDisplay } from "../../utils/formatDate";
+import ClientBandStatusTable from "./ClientBandStatusTable";
+import BookingsDetailCard from "../../BookingsDetailCard/BookingsDetailCard";
 
 const ClientViewBooking = () => {
   const { state } = useLocation();
@@ -43,51 +45,26 @@ const ClientViewBooking = () => {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h5">Event Details:</Typography>
-        <Box>
-          <Typography>
-            <b>Status: </b>
-            {status}
-          </Typography>
-          <Typography>
-            <b>Booking Id:</b> {id}
-          </Typography>
-          <Typography>
-            <b>Start: </b>
-            {startDateTime}
-          </Typography>
-          <Typography>
-            <b>End: </b>
-            {endDateTime}
-          </Typography>
-          <Typography>
-            <b>Venue: </b>
-            {venue}
-          </Typography>
-        </Box>
+        <Typography my={2} variant="h5" m={0}>
+          {formatDateDisplay(startDateTime)} - {formatDateDisplay(endDateTime)}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Box xs={12} sm={6}>
-          <Typography variant="h5">Bands:</Typography>
-          {bands
-            .sort((a, b) => a.bandBooking.rank - b.bandBooking.rank)
-            .map((band) => {
-              return (
-                <Box key={band.name}>
-                  <Typography>
-                    {band.bandBooking.rank}. {band.name} :{" "}
-                    {band.bandBooking.status}
-                  </Typography>
-                </Box>
-              );
-            })}
+        <Typography variant="h5">Event Details:</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }} my={1}>
+          <BookingsDetailCard title={"Booking Id"} content={id} />
+          <BookingsDetailCard title={"Status"} content={status} />
+          <BookingsDetailCard title={"Venue"} content={venue} />
         </Box>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <ClientBandStatusTable bands={bands} />
       </Grid>
       <Grid item xs={12}>
         <Box>
           <Typography>
             Contact me if all musicians are unavailable:{" "}
-            {isContactMe ? "✔" : "X"}
+            {isContactMe ? "✅" : "❌"}
           </Typography>
         </Box>
       </Grid>
