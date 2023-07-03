@@ -11,6 +11,41 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
+
+  // useEffect block to check if user is logged in or not:
+  useEffect(() => {
+    const checkIfAccessTokenIsValid = async () => {
+      try {
+        const checkAccessToken = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/validate`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(checkAccessToken.data.msg);
+        if (checkAccessToken.data.msg === "Valid Token") {
+          return;
+        }
+      } catch (error) {
+        console.log(error.response.data.msg);
+        console.error(
+          "Error occurred while checking if user was logged in",
+          error
+        );
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
+        navigate("/homepage");
+      }
+    };
+    if (accessToken) {
+      checkIfAccessTokenIsValid();
+    } else navigate("/homepage");
+  }, [accessToken, navigate]);
+
   useEffect(() => {
     const getBookings = async () => {
       await axios

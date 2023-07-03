@@ -99,7 +99,8 @@ const HomePage = () => {
         }
       );
 
-      console.log(response.data.name);
+      console.log(response.data.isAdmin);
+      console.log(response);
       localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("userId", response.data.id);
       localStorage.setItem("name", response.data.name);
@@ -107,7 +108,9 @@ const HomePage = () => {
         emailInput: "",
         passwordInput: "",
       });
-      navigate("/");
+      if (response.data.isAdmin === true) {
+        navigate("/admin-dashboard");
+      } else navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("Invalid Email or Password.");
