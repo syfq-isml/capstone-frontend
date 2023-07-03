@@ -43,6 +43,7 @@ const HomePage = () => {
           }
         );
         console.log(checkAccessToken.data.msg);
+        console.log("checkAccessToken: ", checkAccessToken);
         if (checkAccessToken.data.msg === "Valid Token") {
           navigate("/");
         } else {
@@ -98,7 +99,6 @@ const HomePage = () => {
           password: state.passwordInput,
         }
       );
-
       console.log(response.data.name);
       localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("userId", response.data.id);
@@ -107,7 +107,11 @@ const HomePage = () => {
         emailInput: "",
         passwordInput: "",
       });
-      navigate("/");
+      if (response.data.isAdmin === true) {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Invalid Email or Password.");
