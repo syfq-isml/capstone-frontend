@@ -10,9 +10,7 @@ import {
 
 import { useEffect, useState } from "react";
 
-import StatusSelect from "./StatusSelect";
-
-const BandStatusTable = ({ bands, setTempBody }) => {
+const ClientBandStatusTable = ({ bands, setTempBody }) => {
   const [rankedBands, setRankedBands] = useState([]);
 
   // sort the bands
@@ -29,19 +27,13 @@ const BandStatusTable = ({ bands, setTempBody }) => {
         <Table size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell align="center">
                 <b>Rank</b>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <b>Name</b>
               </TableCell>
-              <TableCell align="right">
-                <b>Mobile</b>
-              </TableCell>
-              <TableCell align="right">
-                <b>Email</b>
-              </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <b>Status</b>
               </TableCell>
             </TableRow>
@@ -55,18 +47,10 @@ const BandStatusTable = ({ bands, setTempBody }) => {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                 >
-                  <TableCell component="th" scope="row">
-                    {band.bandBooking.rank}
-                  </TableCell>
-                  <TableCell align="right">{band.name}</TableCell>
-                  <TableCell align="right">{band.phoneNumber}</TableCell>
-                  <TableCell align="right">{band.email}</TableCell>
-                  <TableCell align="right">
-                    <StatusSelect
-                      currentStatus={band.bandBooking.status}
-                      setTempBody={setTempBody}
-                      id={band.bandBooking.id}
-                    />
+                  <TableCell align="center">{band.bandBooking.rank}</TableCell>
+                  <TableCell align="center">{band.name}</TableCell>
+                  <TableCell align="center">
+                    {band.bandBooking.status}
                   </TableCell>
                 </TableRow>
               );
@@ -78,4 +62,4 @@ const BandStatusTable = ({ bands, setTempBody }) => {
   );
 };
 
-export default BandStatusTable;
+export default ClientBandStatusTable;

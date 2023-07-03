@@ -1,18 +1,14 @@
-import { Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { Typography, Button, Grid, Box, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
-
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { formatDate, formatDateDisplay } from "../../utils/formatDate";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import TimingsTable from "./TimingsTable";
 
 const BandViewAvailability = () => {
   const navigate = useNavigate();
@@ -25,26 +21,23 @@ const BandViewAvailability = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const getAvail = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`, {
+    const availInfo = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
+      {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      .then((res) => {
-        console.log("res.data: ", res.data);
-        setTimeslots(res.data);
-      });
+      }
+    );
+    setTimeslots(availInfo.data);
   };
 
   useEffect(() => {
     const getBandInfo = async () => {
-      await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`)
-        .then((res) => {
-          console.log("Band res.data: ", res.data);
-          setBand(res.data);
-        });
+      const bandInfo = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/bands/${bandId}`
+      );
+      setBand(bandInfo.data);
     };
     getBandInfo();
     getAvail();
@@ -56,26 +49,33 @@ const BandViewAvailability = () => {
 
   const handleDelete = (timeslotId) => {
     const deleteAvail = async () => {
-      await axios
-        .delete(
+      try {
+        await axios.delete(
           `${process.env.REACT_APP_BACKEND_URL}/avail/${timeslotId}/band/${bandId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
           }
-        )
-        .then((res) => {
-          getAvail();
+        );
+        toast.success("Blocked Timing Deleted!", {
+          position: toast.POSITION.TOP_RIGHT,
         });
+      } catch (e) {
+        toast.error(`Error: ${e.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
+      getAvail();
     };
     deleteAvail();
   };
 
   const handleSubmit = () => {
     const submitAvail = async () => {
-      await axios
-        .post(
+      try {
+        await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
           {
             startBlockedTiming: startDate,
@@ -86,90 +86,81 @@ const BandViewAvailability = () => {
               Authorization: `Bearer ${accessToken}`,
             },
           }
-        )
-        .then((res) => {
-          getAvail();
+        );
+        toast.success("Blocked Timing Added!", {
+          position: toast.POSITION.TOP_RIGHT,
         });
+      } catch (e) {
+        toast.error(`Error: ${e.message}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      getAvail();
     };
     submitAvail();
   };
 
-  const handleStartDateChange = (date) => {
-    setStartDate(formatDate(date));
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
   };
 
-  const handleEndDateChange = (date) => {
-    setEndDate(formatDate(date));
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
   };
 
   return (
-    <Grid container justifyContent="center" spacing={2}>
+    <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h4" my={2}>
           {band.name} Availability
         </Typography>
       </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h5" my={2}>
+          Add Blocked Timing
+        </Typography>
+
+        <Box>
+          <Grid>
+            <TextField
+              autoComplete="off"
+              required
+              value={startDate}
+              size="small"
+              id="startDateTimeInput"
+              type="datetime-local"
+              label="Start Date & Time"
+              InputLabelProps={{ shrink: true }}
+              onChange={handleStartDateChange}
+            />
+            <Typography>-</Typography>
+            <TextField
+              autoComplete="off"
+              required
+              value={endDate}
+              size="small"
+              id="endDateTimeInput"
+              type="datetime-local"
+              label="End Date & Time"
+              InputLabelProps={{ shrink: true }}
+              onChange={handleEndDateChange}
+            />
+          </Grid>
+
+          <Box m={2}>
+            <Button onClick={handleSubmit} variant="contained">
+              Submit New Blocked Timing
+            </Button>
+          </Box>
+        </Box>
+      </Grid>
       <Grid item xs={12} md={6}>
         <Typography variant="h5" my={2}>
           Blocked Timings
         </Typography>
-        {timeslots.map((timeslot) => {
-          return (
-            <Box
-              sx={{ display: "flex", justifyContent: "center" }}
-              key={timeslot.id}
-            >
-              <Typography>
-                <b>Id: </b>
-                {timeslot.id}
-                <b> Start: </b>
-                {formatDateDisplay(timeslot.startBlockedTiming)}
-                <b> End: </b>
-                {formatDateDisplay(timeslot.endBlockedTiming)}
-              </Typography>
-              <Button
-                sx={{ minHeight: 0, minWidth: "2em", padding: 0 }}
-                onClick={() => {
-                  handleDelete(timeslot.id);
-                }}
-              >
-                🗑️
-              </Button>
-            </Box>
-          );
-        })}
+        <TimingsTable timeslots={timeslots} handleDelete={handleDelete} />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Box>
-          <Typography variant="h5" my={2}>
-            Add Blocked Timing
-          </Typography>
-          <Box>
-            <Typography>
-              <b>Start: </b>
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                onChange={handleStartDateChange}
-                format="d/M/y H:m"
-              />
-            </LocalizationProvider>
-          </Box>
 
-          <Box>
-            <Typography>
-              <b>End: </b>
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                onChange={handleEndDateChange}
-                format="d/M/y H:m"
-              />
-            </LocalizationProvider>
-          </Box>
-          <Button onClick={handleSubmit}>Submit</Button>
-        </Box>
-      </Grid>
       <Grid item xs={12}>
         <Button onClick={handleBack}>Back to All Availability Dashboard</Button>
       </Grid>

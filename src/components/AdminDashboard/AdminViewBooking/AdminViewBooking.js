@@ -1,18 +1,13 @@
-import { Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-
+import { Typography, Button, Grid, Box } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import BandStatusTable from "./BandStatusTable/BandStatusTable";
-
-import { formatDateDisplay } from "../../utils/formatDate";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { formatDateDisplay } from "../../utils/formatDate";
+import BandStatusTable from "./BandStatusTable/BandStatusTable";
+import BookingsDetailCard from "../../BookingsDetailCard/BookingsDetailCard";
 
 const AdminViewBooking = () => {
   const { state } = useLocation();
@@ -60,21 +55,19 @@ const AdminViewBooking = () => {
     });
     const submitBody = async () => {
       try {
-        await axios
-          .put(
-            `${process.env.REACT_APP_BACKEND_URL}/bandbookings/booking/${id}`,
-            postBody,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          )
-          .then((res) => {
-            toast.success("Status Changed!", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          });
+        await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/bandbookings/booking/${id}`,
+          postBody,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        toast.success("Status Changed!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       } catch (e) {
         toast.error(`Error: ${e.response.data.msg}`, {
           position: toast.POSITION.TOP_RIGHT,
@@ -87,38 +80,25 @@ const AdminViewBooking = () => {
   return (
     <Grid container justifyContent="center" spacing={2}>
       <Grid item xs={12}>
-        <Box>
-          <Typography my={2} variant="h4">
-            {eventName}
-          </Typography>
-        </Box>
+        <Typography my={2} variant="h4">
+          {eventName}
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography my={2} variant="h5" m={0}>
+          {formatDateDisplay(startDateTime)} - {formatDateDisplay(endDateTime)}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5">Event Details:</Typography>
-        <Box>
-          <Typography>
-            <b>Status: </b>
-            {status}
-          </Typography>
-          <Typography>
-            <b>Booking Id:</b> {id}
-          </Typography>
-          <Typography>
-            <b>Start: </b>
-            {formatDateDisplay(startDateTime)}
-          </Typography>
-          <Typography>
-            <b>End: </b>
-            {formatDateDisplay(endDateTime)}
-          </Typography>
-          <Typography>
-            <b>Venue: </b>
-            {venue}
-          </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }} my={1}>
+          <BookingsDetailCard title={"Booking Id"} content={id} />
+          <BookingsDetailCard title={"Status"} content={status} />
+          <BookingsDetailCard title={"Venue"} content={venue} />
         </Box>
       </Grid>
-      <Grid item xs={12}>
-        <Box xs={12} sm={6}>
+      <Grid item xs={12} sm={6}>
+        <Box>
           <Typography variant="h5">Bands:</Typography>
           <BandStatusTable bands={bands} setTempBody={setTempBody} />
         </Box>
@@ -127,7 +107,7 @@ const AdminViewBooking = () => {
         <Box>
           <Typography>
             Contact me if all musicians are unavailable:{" "}
-            {isContactMe ? "🗸" : "X"}
+            {isContactMe ? "✅" : "❌"}
           </Typography>
         </Box>
       </Grid>

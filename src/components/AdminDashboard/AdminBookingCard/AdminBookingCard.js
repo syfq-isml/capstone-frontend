@@ -1,15 +1,10 @@
-import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
+import { Typography, Card, CardContent } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+
+import { formatDateCard } from "../../utils/formatDate";
 
 import "./AdminBookingCard.css";
 
@@ -61,19 +56,18 @@ const AdminBookingCard = ({ props }) => {
   };
 
   return (
-    <Card className={`booking-card ${bookingStatusClass}`} sx={{ mb: 2 }}>
+    <Card
+      className={`booking-card`}
+      sx={{ m: 2, backgroundColor: "#f0f2fc", cursor: "pointer" }}
+      onClick={handleView}
+    >
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {statusIcon}
           {eventName}
         </Typography>
-        <Typography>
-          <b>Start: </b>
-          {startDateTime.toString()}
-        </Typography>
-        <Typography>
-          <b>End: </b>
-          {endDateTime.toString()}
+        <Typography sx={{ fontSize: "1.5em" }}>
+          {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
         </Typography>
         <Typography>
           <b>Venue: </b>
@@ -90,7 +84,6 @@ const AdminBookingCard = ({ props }) => {
         <Typography>
           <b>Confirmed Musician:</b> {bandStatus}
         </Typography>
-        <Button onClick={handleView}>View More</Button>
       </CardContent>
     </Card>
   );
