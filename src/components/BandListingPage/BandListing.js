@@ -21,12 +21,14 @@ const BandListingPage = () => {
 
   useEffect(() => {
     const getBands = async () => {
-      await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/bands/genres`)
-        .then((res) => {
-          // console.log("res.data: ", res.data);
-          setBands(res.data);
-        });
+      try {
+        const currentBands = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/bands/genres`
+        );
+        setBands(currentBands.data);
+      } catch (error) {
+        console.error("Error occurred while loading all bands", error);
+      }
     };
     getBands();
   }, []);
