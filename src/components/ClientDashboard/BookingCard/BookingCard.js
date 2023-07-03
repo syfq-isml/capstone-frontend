@@ -21,6 +21,7 @@ import {
 import { formatDateCard } from "../../utils/formatDate";
 
 const BookingCard = ({ props }) => {
+  console.log(props);
   const navigate = useNavigate();
   const { id, eventName, startDateTime, endDateTime, venue, status } = props;
   const [bookingStatusClass, setBookingStatusClass] = useState("pending");
@@ -136,13 +137,8 @@ const BookingCard = ({ props }) => {
             </Paper>
           </Box>
         )}
-        <Typography>
-          <b>Start: </b>
-          {formatDateCard(startDateTime)}
-        </Typography>
-        <Typography>
-          <b>End: </b>
-          {formatDateCard(endDateTime)}
+        <Typography sx={{ fontSize: "1.2em" }}>
+          {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
         </Typography>
         <Typography>
           <b>Venue: </b>

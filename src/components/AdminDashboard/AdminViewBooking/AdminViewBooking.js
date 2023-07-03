@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import { formatDateDisplay } from "../../utils/formatDate";
+import { formatDateCard } from "../../utils/formatDate";
 import BandStatusTable from "./BandStatusTable/BandStatusTable";
 import BookingsDetailCard from "../../BookingsDetailCard/BookingsDetailCard";
 
@@ -86,7 +86,7 @@ const AdminViewBooking = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography my={2} variant="h5" m={0}>
-          {formatDateDisplay(startDateTime)} - {formatDateDisplay(endDateTime)}
+          {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
         </Typography>
       </Grid>
       <Grid item xs={12}>
