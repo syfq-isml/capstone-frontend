@@ -13,6 +13,8 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminViewBooking from "./components/AdminDashboard/AdminViewBooking/AdminViewBooking";
 import AvailabilityListingPage from "./components/AvailabilityListingPage/AvailabilityListingPage";
 import BandViewAvailability from "./components/AvailabilityListingPage/BandViewAvailability/BandViewAvailability";
+import PaymentSuccess from "./components/Payments/PaymentSuccess";
+import PaymentError from "./components/Payments/PaymentError";
 
 class App extends React.Component {
   render() {
@@ -52,6 +54,10 @@ class App extends React.Component {
               path="/admin-availability/:bandId"
               element={<BandViewAvailability />}
             />
+            <Route path="/payments">
+              <Route path="success" element={<PaymentSuccess />} />
+              <Route path="error" element={<PaymentError />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

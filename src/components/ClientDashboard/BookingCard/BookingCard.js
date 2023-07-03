@@ -12,12 +12,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./BookingCard.css";
+import axios from "axios";
 
 const BookingCard = ({ props }) => {
   const navigate = useNavigate();
-  const { eventName, startDateTime, endDateTime, venue, status } = props;
+  const { id, eventName, startDateTime, endDateTime, venue, status } = props;
   const [bookingStatusClass, setBookingStatusClass] = useState("pending");
   const [statusIcon, setStatusIcon] = useState("⌛");
+  const accessToken = localStorage.getItem("accessToken");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const statusRef = {
@@ -36,6 +39,26 @@ const BookingCard = ({ props }) => {
 
   const handleView = () => {
     navigate("/booking-request", { state: props });
+  };
+
+  const handleCheckout = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/payments/booking/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      window.location = response.data.url;
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,7 +85,11 @@ const BookingCard = ({ props }) => {
           {status}
         </Typography>
         <Button onClick={handleView}>View More</Button>
-        {status === "Awaiting Payment" ? <Button>Pay here</Button> : null}
+        {status === "Awaiting Payment" ? (
+          <Button onClick={handleCheckout} disabled={isLoading ? true : false}>
+            Pay here
+          </Button>
+        ) : null}
       </CardContent>
     </Card>
   );
