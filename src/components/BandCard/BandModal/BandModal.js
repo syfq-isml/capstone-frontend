@@ -36,11 +36,16 @@ const BandModal = ({ props, handleOpen, handleClose, open }) => {
               <CancelIcon />
             </IconButton>
           </Box>
-          <Typography id="modal-modal-title" variant="h3" my={1}>
+          <Typography
+            id="modal-modal-title"
+            variant="h3"
+            my={2}
+            textAlign={"center"}
+          >
             {name}
           </Typography>
-          <Image src={photoUrl} height={"15em"} />
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <Image src={photoUrl} style={{ width: "50%" }} />
+          <Typography id="modal-modal-description" sx={{ mt: 2, px: 2 }}>
             {description}
           </Typography>
           <Box textAlign="center" my={2}>
@@ -50,6 +55,7 @@ const BandModal = ({ props, handleOpen, handleClose, open }) => {
                   label={genre.name}
                   key={genre.id + name}
                   className="band-category"
+                  sx={{ p: 1, mx: 0.5 }}
                 />
               );
             })}

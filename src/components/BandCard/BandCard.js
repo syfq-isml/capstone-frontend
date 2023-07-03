@@ -31,7 +31,7 @@ const BandCard = ({ props }) => {
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {description.split(".")[0]}
+            {description.substr(0, 100) + "..."}
           </Typography>
         </CardContent>
         <Box textAlign="center">
@@ -41,6 +41,7 @@ const BandCard = ({ props }) => {
                 label={genre.name}
                 key={genre.id + name}
                 className="band-category"
+                sx={{ p: 1, mx: 0.5 }}
               />
             );
           })}

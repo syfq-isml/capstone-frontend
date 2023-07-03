@@ -1,14 +1,26 @@
 .band-card {
-  height: 25em;
+  height: 35em;
 }
 
 .band-image {
-  height: 50%;
+  height: 62%;
 }
 
 .band-category {
-  margin-left: 0.2em;
-  margin-right: 0.2em;
+  /* margin-left: 0.2em;
+  margin-right: 0.2em; */
+
+  background: #11998e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #32d26e,
+    #11998e
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #32d26e,
+    #11998e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 @media only screen and (max-width: 600px) {
