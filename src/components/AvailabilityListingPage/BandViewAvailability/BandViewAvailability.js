@@ -2,17 +2,12 @@ import { Typography, Button, Grid, Box, TextField } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { formatDate } from "../../utils/formatDate";
 import TimingsTable from "./TimingsTable";
 
 const BandViewAvailability = () => {
