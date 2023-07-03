@@ -9,7 +9,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { formatDate, formatDateDisplay } from "../../utils/formatDate";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { formatDate } from "../../utils/formatDate";
 import TimingsTable from "./TimingsTable";
 
 const BandViewAvailability = () => {
@@ -31,7 +34,6 @@ const BandViewAvailability = () => {
         },
       }
     );
-
     setTimeslots(availInfo.data);
   };
 
@@ -81,7 +83,16 @@ const BandViewAvailability = () => {
       );
       getAvail();
     };
-    submitAvail();
+    try {
+      submitAvail();
+      toast.success("Timeslot added!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (e) {
+      toast.error(`Error: ${e.response.data.msg}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const handleStartDateChange = (date) => {
@@ -140,7 +151,7 @@ const BandViewAvailability = () => {
           </Box>
           <Box m={2}>
             <Button onClick={handleSubmit} variant="contained">
-              Submit
+              Submit New Blocked Timing
             </Button>
           </Box>
         </Box>
