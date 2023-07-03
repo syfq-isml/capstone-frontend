@@ -1,11 +1,4 @@
-import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
+import { Typography, Card, CardContent } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
@@ -14,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { formatDateCard } from "../../utils/formatDate";
 
 import "./AdminBookingCard.css";
-import { fontSize } from "@mui/system";
 
 const AdminBookingCard = ({ props }) => {
   const navigate = useNavigate();
