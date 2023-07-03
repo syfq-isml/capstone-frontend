@@ -58,6 +58,9 @@ const ClientDashboard = () => {
     getBookings();
   }, [accessToken]);
 
+  const handleNavigateToNewBookingPage = () => {
+    navigate("/makenewbooking");
+  };
   return (
     <Stack alignItems={"center"} justifyContent={"center"} my={1}>
       <Typography variant="h4" my={1} sx={{ textAlign: "center" }}>
