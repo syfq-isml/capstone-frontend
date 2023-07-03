@@ -99,7 +99,9 @@ const HomePage = () => {
           password: state.passwordInput,
         }
       );
-      console.log(response.data.name);
+
+      console.log(response.data.isAdmin);
+      console.log(response);
       localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("userId", response.data.id);
       localStorage.setItem("name", response.data.name);
