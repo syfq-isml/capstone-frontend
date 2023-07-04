@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import BandCard from "../BandCard/BandCard";
 import InputLabel from "@mui/material/InputLabel";
@@ -48,50 +48,52 @@ const BandListingPage = () => {
   }, []);
 
   return (
-    <Stack
-      alignItems={"center"}
-      justifyContent={"center"}
-      my={1}
-      ml={4}
-      mr={4}
-      pb={4}
-    >
-      <Typography variant="h3" my={3}>
-        Our Musicians
-      </Typography>
-      <FormControl>
-        <InputLabel id="select-helper-label">Genre</InputLabel>
-        <Select
-          labelId="select-helper-label"
-          id="simple-select-helper"
-          value={selectedGenre}
-          label="selectedGenre"
-          onChange={handleChange}
-        >
-          <MenuItem value="All">All</MenuItem>
-          {genres.map((genre) => {
-            return (
-              <MenuItem value={genre.name} key={genre.name}>
-                {genre.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-        <FormHelperText>Filter by Genre</FormHelperText>
-      </FormControl>
-      <Grid container spacing={2} my={1}>
-        {bands.map((band) => {
-          if (selectedGenre === "All") {
-            return <BandCard key={band.name} props={band} />;
-          }
-          for (const genre of band.genres) {
-            if (genre.name === selectedGenre) {
+    <Container maxWidth="xl">
+      <Stack
+        alignItems={"center"}
+        justifyContent={"center"}
+        my={1}
+        ml={4}
+        mr={4}
+        pb={4}
+      >
+        <Typography variant="h3" my={3}>
+          Our Musicians
+        </Typography>
+        <FormControl>
+          <InputLabel id="select-helper-label">Genre</InputLabel>
+          <Select
+            labelId="select-helper-label"
+            id="simple-select-helper"
+            value={selectedGenre}
+            label="selectedGenre"
+            onChange={handleChange}
+          >
+            <MenuItem value="All">All</MenuItem>
+            {genres.map((genre) => {
+              return (
+                <MenuItem value={genre.name} key={genre.name}>
+                  {genre.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+          <FormHelperText>Filter by Genre</FormHelperText>
+        </FormControl>
+        <Grid container spacing={2} my={1}>
+          {bands.map((band) => {
+            if (selectedGenre === "All") {
               return <BandCard key={band.name} props={band} />;
             }
-          }
-        })}
-      </Grid>
-    </Stack>
+            for (const genre of band.genres) {
+              if (genre.name === selectedGenre) {
+                return <BandCard key={band.name} props={band} />;
+              }
+            }
+          })}
+        </Grid>
+      </Stack>
+    </Container>
   );
 };
 

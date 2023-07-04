@@ -74,7 +74,12 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar
+      position="static"
+      elevation={5}
+      enableColorOnDark
+      sx={{ backgroundColor: "#00C766" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -85,14 +90,13 @@ const Navbar = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "Arial",
+              fontFamily: "Meddon",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
+              color: "white",
               textDecoration: "none",
             }}
           >
-            OPUS
+            Opus
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -159,9 +163,8 @@ const Navbar = () => {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: "Meddon",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
@@ -176,7 +179,7 @@ const Navbar = () => {
                     onClick={() => {
                       navigate(handleNavigateForAdminPages(pageForAdmin));
                     }}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{ my: 2, color: "white", display: "block", mx: 2 }}
                   >
                     {pageForAdmin}
                   </Button>
@@ -187,7 +190,7 @@ const Navbar = () => {
                     onClick={() => {
                       navigate(handleNavigation(page));
                     }}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{ my: 2, color: "white", display: "block", mx: 2 }}
                   >
                     {page}
                   </Button>
