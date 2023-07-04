@@ -77,7 +77,7 @@ const AdminDashboard = () => {
           </Box>
         )}
       </Box>
-      <Box mb={3}>
+      <Box mb={3} width={"100%"}>
         <Grid container>
           {bookings.map((booking) => {
             return (
