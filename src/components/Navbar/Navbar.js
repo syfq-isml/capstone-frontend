@@ -16,7 +16,7 @@ import Grid from "@mui/material/Grid";
 
 const pages = ["Bands", "New Booking", "Your Bookings"];
 const pagesForAdmin = ["Bands", "View Bookings", "Manage Availability"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 const Navbar = () => {
   const navigate = useNavigate();
