@@ -10,7 +10,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-import BandCard from "../BandCard/BandCard";
 import BandAvailabilityCard from "./BandAvailabilityCard/BandAvailabilityCard";
 
 import axios from "axios";
@@ -20,57 +19,7 @@ const AvailabilityListingPage = () => {
   const [selectedGenre, setSelectedGenre] = useState("All");
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
-  const [genres, setGenres] = useState([
-    {
-      id: 1,
-      name: "Pop",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 2,
-      name: "Rock",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 3,
-      name: "Punk",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 4,
-      name: "Jazz",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 5,
-      name: "Hip Hop",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 6,
-      name: "Blues",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 7,
-      name: "RnB",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-    {
-      id: 8,
-      name: "Classical",
-      createdAt: "2023-06-24T14:15:21.139Z",
-      updatedAt: "2023-06-24T14:15:21.139Z",
-    },
-  ]);
+  const [genres, setGenres] = useState([]);
 
   // useEffect block to check if user is logged in or not:
   useEffect(() => {
@@ -119,6 +68,20 @@ const AvailabilityListingPage = () => {
         });
     };
     getBands();
+  }, []);
+
+  useEffect(() => {
+    const loadAllGenres = async () => {
+      try {
+        const getAllGenres = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/genres`
+        );
+        setGenres(getAllGenres.data);
+      } catch (error) {
+        console.error("Error occurred while loading all genres", error);
+      }
+    };
+    loadAllGenres();
   }, []);
 
   return (
