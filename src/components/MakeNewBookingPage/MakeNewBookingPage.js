@@ -268,11 +268,18 @@ const MakeNewBookingPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Stack alignItems={"center"} justifyContent={"center"} my={5}>
         <Typography variant="h2" sx={{ textAlign: "center", fontSize: "2rem" }}>
-          Hire the best live musicians for your event. Fill in the form and
-          check artists' availability.
+          Hire the best live musicians for your event.
+        </Typography>
+        <Typography
+          variant="h5"
+          fontWeight={400}
+          sx={{ textAlign: "center", fontSize: "2rem" }}
+        >
+          {/* Hire the best live musicians for your event.  */}
+          Fill in the form to check artists' availability.
         </Typography>
         <br />
         <br />

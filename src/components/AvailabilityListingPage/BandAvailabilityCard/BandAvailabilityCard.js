@@ -46,6 +46,7 @@ const BandAvailabilityCard = ({ props }) => {
                   label={genre.name}
                   key={genre.id + name}
                   className="band-category"
+                  sx={{ p: 1, mx: 0.5 }}
                 />
               );
             })}
