@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -13,6 +13,11 @@ import { useNavigate } from "react-router-dom";
 
 import "./BookingCard.css";
 import axios from "axios";
+import {
+  AccessTime,
+  CheckCircleOutlined,
+  PaidOutlined,
+} from "@mui/icons-material";
 
 const BookingCard = ({ props }) => {
   const navigate = useNavigate();
@@ -62,10 +67,10 @@ const BookingCard = ({ props }) => {
   };
 
   return (
-    <Card className={`booking-card ${bookingStatusClass}`} sx={{ mb: 2 }}>
+    <Card className={`booking-card`} sx={{ mb: 2 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {statusIcon}
+          {/* {statusIcon} */}
           {eventName}
         </Typography>
         <Typography>
@@ -80,10 +85,61 @@ const BookingCard = ({ props }) => {
           <b>Venue: </b>
           {venue}
         </Typography>
-        <Typography>
-          <b>Status: </b>
-          {status}
-        </Typography>
+
+        {status === "Pending" && (
+          <Paper sx={{ width: "fit-content", backgroundColor: "#CECECE" }}>
+            <Stack
+              direction={"row"}
+              spacing={0.5}
+              alignItems={"center"}
+              justifyContent={"center"}
+              py={0.5}
+              px={1}
+            >
+              <AccessTime fontSize="small" sx={{ color: "black" }} />
+              <Typography fontWeight={600} color={"black"}>
+                {status}
+              </Typography>
+            </Stack>
+          </Paper>
+        )}
+
+        {status === "Awaiting Payment" && (
+          <Paper sx={{ width: "fit-content", backgroundColor: "orange" }}>
+            <Stack
+              direction={"row"}
+              spacing={0.5}
+              alignItems={"center"}
+              justifyContent={"center"}
+              py={0.5}
+              px={1}
+            >
+              <PaidOutlined fontSize="small" sx={{ color: "black" }} />
+              <Typography fontWeight={600} color={"black"}>
+                {status}
+              </Typography>
+            </Stack>
+          </Paper>
+        )}
+
+        {status === "Paid & Confirmed" && (
+          <Paper sx={{ width: "fit-content", backgroundColor: "#00DD53" }}>
+            <Stack
+              direction={"row"}
+              spacing={0.5}
+              alignItems={"center"}
+              justifyContent={"center"}
+              py={0.5}
+              px={1}
+            >
+              <CheckCircleOutlined fontSize="small" sx={{ color: "black" }} />
+              <Typography fontWeight={600} color={"black"}>
+                {status}
+              </Typography>
+            </Stack>
+          </Paper>
+        )}
+
         <Button onClick={handleView}>View More</Button>
         {status === "Awaiting Payment" ? (
           <Button onClick={handleCheckout} disabled={isLoading ? true : false}>

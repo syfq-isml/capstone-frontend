@@ -77,8 +77,8 @@ const Navbar = () => {
     <AppBar
       position="static"
       elevation={5}
-      enableColorOnDark
-      sx={{ backgroundColor: "#00C766" }}
+      // enableColorOnDark
+      // sx={{ backgroundColor: "#00C766" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
