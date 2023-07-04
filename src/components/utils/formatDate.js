@@ -12,7 +12,7 @@ export const formatDateDisplay = (date) => {
 
 // format date for cards
 export const formatDateCard = (date) => {
-  return format(parseISO(date), "dd E MMM y HH:mm");
+  return format(parseISO(date), "dd MMM E y HH:mm");
 };
 
 export * from "./formatDate";

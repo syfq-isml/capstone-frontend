@@ -1,4 +1,11 @@
-import { Typography, Card, CardContent, Paper, Stack } from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Paper,
+  Stack,
+  Box,
+} from "@mui/material";
 
 import { useEffect, useState } from "react";
 
@@ -71,7 +78,66 @@ const AdminBookingCard = ({ props }) => {
           {/* {statusIcon} */}
           {eventName}
         </Typography>
-        <Typography sx={{ fontSize: "1.5em" }}>
+        {status === "Pending" && (
+          <Box my={1}>
+            <Paper sx={{ width: "fit-content", backgroundColor: "#CECECE" }}>
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <AccessTime fontSize="small" sx={{ color: "black" }} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
+
+        {status === "Awaiting Payment" && (
+          <Box my={1}>
+            <Paper sx={{ width: "fit-content", backgroundColor: "orange" }}>
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <PaidOutlined fontSize="small" sx={{ color: "black" }} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
+
+        {status === "Paid & Confirmed" && (
+          <Box my={1}>
+            <Paper sx={{ width: "fit-content", backgroundColor: "#00DD53" }}>
+              <Stack
+                direction={"row"}
+                spacing={0.5}
+                alignItems={"center"}
+                justifyContent={"center"}
+                py={0.5}
+                px={1}
+              >
+                <CheckCircleOutlined fontSize="small" sx={{ color: "black" }} />
+                <Typography fontWeight={600} color={"black"}>
+                  {status}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Box>
+        )}
+        <Typography sx={{ fontSize: "1.2em" }}>
           {formatDateCard(startDateTime)} - {formatDateCard(endDateTime)}
         </Typography>
         <Typography>
@@ -86,59 +152,6 @@ const AdminBookingCard = ({ props }) => {
         <Typography>
           <b>Confirmed Musician:</b> {bandStatus}
         </Typography>
-        {status === "Pending" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "#CECECE" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <AccessTime fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
-
-        {status === "Awaiting Payment" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "orange" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <PaidOutlined fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
-
-        {status === "Paid & Confirmed" && (
-          <Paper sx={{ width: "fit-content", backgroundColor: "#00DD53" }}>
-            <Stack
-              direction={"row"}
-              spacing={0.5}
-              alignItems={"center"}
-              justifyContent={"center"}
-              py={0.5}
-              px={1}
-            >
-              <CheckCircleOutlined fontSize="small" sx={{ color: "black" }} />
-              <Typography fontWeight={600} color={"black"}>
-                {status}
-              </Typography>
-            </Stack>
-          </Paper>
-        )}
       </CardContent>
     </Card>
   );
