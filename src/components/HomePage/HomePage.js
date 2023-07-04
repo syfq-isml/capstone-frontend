@@ -226,11 +226,10 @@ const HomePage = () => {
                   style={{ aspectRatio: "16/9" }}
                   src="https://www.youtube.com/embed/lbHQmwD0wiA"
                   title="YouTube video player"
-                  frameborder="0"
+                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  autoplay
                   muted
-                  allowfullscreen
+                  allowFullScreen
                 ></iframe>
                 <Stack justifyContent={"center"} p={2}>
                   <Typography variant="h3">
