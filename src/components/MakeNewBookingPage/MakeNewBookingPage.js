@@ -42,9 +42,7 @@ const MakeNewBookingPage = () => {
 
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
   const userId = localStorage.getItem("userId");
-  console.log("userId:", userId);
 
   // For Mobile Responsive View, these const are used in the return block later:
   const theme = useTheme();
@@ -63,7 +61,6 @@ const MakeNewBookingPage = () => {
             },
           }
         );
-        console.log(checkAccessToken.data.msg);
         if (checkAccessToken.data.msg === "Valid Token") {
           return;
         }
@@ -96,7 +93,6 @@ const MakeNewBookingPage = () => {
             },
           }
         );
-        console.log(getAllGenres.data);
         setGenres(getAllGenres.data);
       } catch (error) {
         console.error("Error occurred while loading all genres", error);
@@ -124,7 +120,6 @@ const MakeNewBookingPage = () => {
         // If the band is not yet selected (i.e. user has clicked select on a band that before the click was not selected), add it to the selected bands with a ranking
         const ranking = selectedBands.length + 1; // Add 1 to the selectedBands.length since on the first 'select', rankings have to start from 1 and not 0 like in a normal array.
         const updatedSelectedBands = [...selectedBands, { ...band, ranking }];
-        console.log(updatedSelectedBands);
         return updateRankings(updatedSelectedBands); // Update rankings after adding the band
       }
     });
@@ -139,7 +134,6 @@ const MakeNewBookingPage = () => {
       ...band,
       ranking: index + 1,
     }));
-    console.log(updatedBands);
     setSelectedBandIdRank(
       updatedBands.map((band) => ({
         id: band.id,
@@ -148,16 +142,12 @@ const MakeNewBookingPage = () => {
     );
     return updatedBands;
   };
-  console.log("selectedBandIdRank:", selectedBandIdRank);
-  // console.log(selectedBandIdRank[0].ranking);
-  // console.log(selectedBandIdRank[0].id);
 
   // Logic for when user hits "Check Availability" Button:
   const handleSubmitCheckAvailability = async (e) => {
     e.preventDefault();
-
-    console.log(state.startDateTimeInput);
-    console.log(state.endDateTimeInput);
+    console.log("startDateTime submitted to BE: ", state.startDateTimeInput);
+    console.log("endDateTime submitted to BE: ", state.endDateTimeInput);
     try {
       const getBandsAvailability = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/avail/genre/${state.genreInput}`,
@@ -172,7 +162,6 @@ const MakeNewBookingPage = () => {
           },
         }
       );
-      console.log(getBandsAvailability.data);
       setBandsAvailable(getBandsAvailability.data);
     } catch (error) {
       console.error("Error occurred while finding available bands:", error);
@@ -191,7 +180,6 @@ const MakeNewBookingPage = () => {
     } else {
       // Show an error message
       toast.error("Please select 3 bands and choose a booking option.");
-      console.log("Please select exactly three bands.");
     }
   };
   // Logic for when user hits "Edit" Button:
@@ -204,12 +192,14 @@ const MakeNewBookingPage = () => {
   // Logic for when user hits "Submit" Button:
   const handleSubmitBooking = async (e) => {
     e.preventDefault();
+    console.log("startDateTime submitted to BE: ", state.startDateTimeInput);
+    console.log("endDateTime submitted to BE: ", state.endDateTimeInput);
     try {
       const submitBooking = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/bookings/user/${userId}/genre/${state.genreInput}`,
         {
-          startDateTime: state.startDateTimeInput,
-          endDateTime: state.endDateTimeInput,
+          startDateTime: new Date(state.startDateTimeInput),
+          endDateTime: new Date(state.endDateTimeInput),
           venue: state.venueInput,
           eventName: state.eventNameInput,
           isContactMe: isContactMe,
@@ -226,7 +216,7 @@ const MakeNewBookingPage = () => {
           },
         }
       );
-      console.log(submitBooking);
+      console.log("dates received from server: ", submitBooking);
       toast.success(
         "Hurray! You just made a new booking. It's status is only confirmed AFTER payment."
       );
@@ -243,18 +233,15 @@ const MakeNewBookingPage = () => {
   // ALL THE FORM HANDLE CHANGES:
   const handleChange = (e) => {
     setState({ ...state, [e.target.id]: e.target.value });
-    console.log(state);
   };
 
   const handleGenreChange = (e) => {
     setState({ ...state, genreInput: e.target.value });
-    console.log("genreInput:", state.genreInput);
   };
 
   const handleBookingOptionChange = (e) => {
     setIsContactMe(e.target.value);
   };
-  console.log("isContactMe:", isContactMe);
   //
   //
 
