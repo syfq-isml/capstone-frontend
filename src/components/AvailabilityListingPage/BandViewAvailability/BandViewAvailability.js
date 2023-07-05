@@ -78,8 +78,8 @@ const BandViewAvailability = () => {
         await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/avail/band/${bandId}`,
           {
-            startBlockedTiming: startDate,
-            endBlockedTiming: endDate,
+            startBlockedTiming: new Date(startDate),
+            endBlockedTiming: new Date(endDate),
           },
           {
             headers: {

@@ -153,8 +153,8 @@ const MakeNewBookingPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}/avail/genre/${state.genreInput}`,
 
         {
-          startDateTime: state.startDateTimeInput,
-          endDateTime: state.endDateTimeInput,
+          startDateTime: new Date(state.startDateTimeInput),
+          endDateTime: new Date(state.endDateTimeInput),
         },
         {
           headers: {
